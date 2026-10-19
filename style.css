@@ -507,52 +507,31 @@ body {
 .panda-illustration-wrap {
     position: relative;
     width: 100%;
-    margin: clamp(4px, 0.8vh, 8px) 0;
+    margin: clamp(6px, 1.2vh, 12px) 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 18px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 16px rgba(255, 107, 139, 0.12);
+    border: 1.5px solid rgba(255, 255, 255, 0.85);
 }
 
 .panda-img {
-    width: auto;
-    max-width: 100%;
-    max-height: clamp(110px, 17vh, 160px);
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    max-height: clamp(165px, 26vh, 245px);
     object-fit: contain;
-    border-radius: 12px;
+    border-radius: 14px;
     transition: transform 0.25s ease;
-    filter: drop-shadow(0 4px 10px rgba(200, 100, 130, 0.15));
+    filter: drop-shadow(0 4px 12px rgba(200, 100, 130, 0.12));
+    display: block;
 }
 
 .panda-illustration-wrap:active .panda-img {
-    transform: scale(1.03);
-}
-
-.speech-bubble {
-    position: absolute;
-    top: 4px;
-    right: clamp(10px, 3vw, 20px);
-    background: #FFF;
-    border: 1.5px solid #FFB6C1;
-    padding: 3px 8px;
-    border-radius: 12px;
-    font-family: 'Caveat', cursive;
-    font-size: clamp(0.95rem, 3.2vw, 1.15rem);
-    font-weight: 700;
-    color: var(--primary-deep);
-    box-shadow: 0 3px 8px rgba(255, 107, 139, 0.14);
-    animation: gentleWiggle 3s infinite ease-in-out;
-}
-
-.speech-bubble::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 12px;
-    border-width: 5px 5px 0;
-    border-style: solid;
-    border-color: #FFF transparent;
-    display: block;
-    width: 0;
+    transform: scale(1.02);
 }
 
 .card-message-box {
@@ -854,16 +833,18 @@ body {
 }
 
 .sunset-scene-wrap {
-    margin-top: 3px;
-    border-radius: 10px;
+    margin-top: 6px;
+    border-radius: 14px;
     overflow: hidden;
     position: relative;
-    box-shadow: 0 2px 8px rgba(255, 140, 100, 0.14);
+    box-shadow: 0 3px 12px rgba(255, 140, 100, 0.18);
+    border: 1.5px solid rgba(255, 255, 255, 0.85);
 }
 
 .sunset-img {
     width: 100%;
-    height: clamp(50px, 9vh, 80px);
+    height: auto;
+    max-height: clamp(80px, 14vh, 125px);
     object-fit: cover;
     display: block;
 }
