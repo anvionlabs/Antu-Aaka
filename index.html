@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#FFD6E0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>To My Best Friend Antasmita Roy (Antu Aaka) - A Special Sorry Card 🐼❤️</title>
+    <meta name="description" content="An interactive, heartfelt apology, promises, and forgiveness card for my best friend Antasmita Roy (Antu Aaka).">
+    
+    <!-- Google Fonts for Handwriting & Cute Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Ambient floating hearts canvas -->
+    <canvas id="ambient-canvas"></canvas>
+
+    <!-- Top Navigation & Controls -->
+    <header class="top-navbar">
+        <div class="logo-badge">
+            <span class="sparkle">✨</span>
+            <span>For Antasmita Roy (Antu Aaka)</span>
+            <span>🐼</span>
+        </div>
+        <div class="nav-actions">
+            <!-- Mode Toggle: Story Carousel vs Panoramic All 5 Cards -->
+            <button class="view-toggle-btn" id="viewModeBtn" title="Switch between story view and all 5 bookmarks">
+                <span id="modeIcon">📑</span>
+                <span id="modeText">All 5 Cards</span>
+            </button>
+            <!-- Audio / Music Toggle -->
+            <button class="icon-btn" id="audioToggleBtn" title="Play / Pause gentle background music">
+                🎵
+            </button>
+            <!-- Letter / Personal Note modal -->
+            <button class="icon-btn" id="letterModalBtn" title="Read / Write a heartfelt personal note">
+                💌
+            </button>
+        </div>
+    </header>
+
+    <!-- ==========================================================================
+         INTRO ENVELOPE SCREEN
+         ========================================================================== -->
+    <div class="envelope-overlay" id="envelopeOverlay">
+        <div class="envelope-container">
+            <div class="envelope-intro-img-wrap">
+                <img src="assets/panda_letter_intro.jpg" alt="Panda holding letter" class="envelope-intro-img">
+            </div>
+            <h1 class="envelope-title">A Special Delivery...</h1>
+            <p class="envelope-subtitle">
+                For My Best Friend <strong>Antasmita Roy (Antu Aaka)</strong> ❤️
+            </p>
+            <button class="open-card-btn" id="openCardBtn">
+                <span>💌</span>
+                <span>Tap to Open Your Card</span>
+                <span>✨</span>
+            </button>
+            <p class="envelope-note">A heartfelt apology & promise made with pure love 🐼</p>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         MAIN CONTENT AREA
+         ========================================================================== -->
+    <main class="main-wrapper">
+        
+        <!-- Story Progress Bar (Visible in Story Carousel Mode) -->
+        <div class="story-header" id="storyHeader">
+            <div class="story-progress-bar">
+                <div class="progress-segment active" data-index="0"><div class="fill"></div></div>
+                <div class="progress-segment" data-index="1"><div class="fill"></div></div>
+                <div class="progress-segment" data-index="2"><div class="fill"></div></div>
+                <div class="progress-segment" data-index="3"><div class="fill"></div></div>
+                <div class="progress-segment" data-index="4"><div class="fill"></div></div>
+            </div>
+            <div class="story-meta-bar">
+                <span>Swipe or tap arrows to navigate</span>
+                <span class="story-counter" id="storyCounterText">1 / 5</span>
+            </div>
+        </div>
+
+        <!-- STORY CAROUSEL VIEW -->
+        <div class="carousel-view" id="carouselView">
+            
+            <!-- Stage wrapper with mid-card floating sliding arrows -->
+            <div class="carousel-stage-wrapper">
+                <!-- Middle Left Arrow for Sliding -->
+                <button class="nav-arrow-btn arrow-prev" id="prevCardBtn" title="Previous Card" aria-label="Previous Card" disabled>
+                    <span>‹</span>
+                </button>
+
+                <div class="carousel-stage">
+
+                <!-- ================= CARD 1 / 5 ================= -->
+                <article class="card-item card-1 active" data-card="1">
+                    <div class="card-top-accent"></div>
+                    <span class="card-float-heart" style="top: 15px; left: 15px;">💖</span>
+                    <span class="card-float-heart" style="top: 40px; right: 20px;">🌸</span>
+
+                    <div class="card-1-header">
+                        <p class="script-sub">To My Best Friend</p>
+                        <h2 class="recipient-name">Antasmita Roy</h2>
+                        <p class="recipient-nickname">(Antu Aaka)</p>
+                        
+                        <div class="heart-badge-wrap">
+                            <div class="heart-badge">
+                                <span>💌</span>
+                                <span>A very special Sorry Card for you</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panda Bouquet Illustration -->
+                    <div class="panda-illustration-wrap" id="bouquetWrap" title="Tap bouquet to shower rose petals!">
+                        <img src="assets/panda_1_flowers_hd.png" alt="Panda offering flowers to best friend" class="panda-img">
+                        <div class="speech-bubble">I'm Sorry... ❤️</div>
+                    </div>
+
+                    <!-- Heartfelt Text Box -->
+                    <div class="card-message-box">
+                        <p>For my mistakes,</p>
+                        <p>for the misunderstandings,</p>
+                        <p>and for anything that hurt you...</p>
+                        <p><strong>I'm truly sorry ❤️</strong></p>
+                    </div>
+
+                    <div class="card-counter-pill">1/5</div>
+                </article>
+
+                <!-- ================= CARD 2 / 5 ================= -->
+                <article class="card-item card-2" data-card="2">
+                    <div class="card-top-accent"></div>
+                    <span class="card-float-heart" style="top: 15px; left: 15px;">🥺</span>
+                    <span class="card-float-heart" style="top: 30px; right: 20px;">💔</span>
+
+                    <div class="card-2-header">
+                        <h2 class="card-title-medium">
+                            I know I made mistakes...<br>
+                            And I feel really bad for them ❤️
+                        </h2>
+                    </div>
+
+                    <!-- Sad Panda Illustration -->
+                    <div class="panda-illustration-wrap">
+                        <img src="assets/panda_2_sorry_sign_hd.png" alt="Sad panda holding I'm Sorry sign" class="panda-img">
+                    </div>
+
+                    <!-- Reflection Sticky Notes -->
+                    <div class="notes-list">
+                        <div class="sticky-note-item" title="Click to show love">
+                            <span class="note-icon">⏰</span>
+                            <span>Maybe I didn't give you enough time sometimes...</span>
+                        </div>
+                        <div class="sticky-note-item" title="Click to show love">
+                            <span class="note-icon">💬</span>
+                            <span>Maybe I said something wrong...</span>
+                        </div>
+                        <div class="sticky-note-item" title="Click to show love">
+                            <span class="note-icon">💭</span>
+                            <span>Maybe I didn't understand you properly...</span>
+                        </div>
+                        <div class="sticky-note-item" title="Click to show love">
+                            <span class="note-icon">☹️</span>
+                            <span>Maybe I made you feel upset...</span>
+                        </div>
+                    </div>
+
+                    <div class="card-message-box">
+                        <p>I never meant to hurt you...</p>
+                        <p><strong>You're too special to me ❤️</strong></p>
+                    </div>
+
+                    <div class="card-counter-pill">2/5</div>
+                </article>
+
+                <!-- ================= CARD 3 / 5 ================= -->
+                <article class="card-item card-3" data-card="3">
+                    <div class="card-top-accent"></div>
+                    <span class="card-float-heart" style="top: 15px; left: 15px;">✨</span>
+                    <span class="card-float-heart" style="top: 35px; right: 20px;">💖</span>
+
+                    <div class="card-3-header">
+                        <h2 class="card-title-large">Please Forgive Me ❤️</h2>
+                    </div>
+
+                    <!-- Hugging Panda Illustration -->
+                    <div class="panda-illustration-wrap">
+                        <img src="assets/panda_3_hug_hd.png" alt="Cute panda hugging baby panda" class="panda-img">
+                    </div>
+
+                    <!-- Notepad Checklist "I Promise..." -->
+                    <div class="notepad-container">
+                        <div class="notepad-title">
+                            <span>I Promise... 📝</span>
+                            <span class="promise-counter-badge" id="promiseBadge">6/6 Sealed</span>
+                        </div>
+
+                        <div class="promise-list" id="promiseList">
+                            <div class="promise-item checked" data-idx="1">
+                                <div class="promise-checkbox">✓</div>
+                                <span>I will be more mindful</span>
+                            </div>
+                            <div class="promise-item checked" data-idx="2">
+                                <div class="promise-checkbox">✓</div>
+                                <span>I will listen better</span>
+                            </div>
+                            <div class="promise-item checked" data-idx="3">
+                                <div class="promise-checkbox">✓</div>
+                                <span>I will always respect you</span>
+                            </div>
+                            <div class="promise-item checked" data-idx="4">
+                                <div class="promise-checkbox">✓</div>
+                                <span>I will be there for you</span>
+                            </div>
+                            <div class="promise-item checked" data-idx="5">
+                                <div class="promise-checkbox">✓</div>
+                                <span>I will not repeat those mistakes</span>
+                            </div>
+                            <div class="promise-item checked" data-idx="6">
+                                <div class="promise-checkbox">✓</div>
+                                <span>I will value our friendship forever</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bottom-pill-badge">
+                        Because our friendship means everything to me ❤️
+                    </div>
+
+                    <div class="card-counter-pill">3/5</div>
+                </article>
+
+                <!-- ================= CARD 4 / 5 ================= -->
+                <article class="card-item card-4" data-card="4">
+                    <div class="card-top-accent"></div>
+                    <span class="card-float-heart" style="top: 15px; left: 15px;">🌟</span>
+                    <span class="card-float-heart" style="top: 35px; right: 20px;">🌸</span>
+
+                    <div class="card-4-header">
+                        <h2 class="card-title-medium" style="font-size: 1.7rem; color: var(--primary-deep);">
+                            Thank You<br>
+                            <span style="font-size: 1.25rem; color: var(--text-dark);">for always being there for me ❤️</span>
+                        </h2>
+                    </div>
+
+                    <!-- Stacked Cuddling Pandas Illustration -->
+                    <div class="panda-illustration-wrap">
+                        <img src="assets/panda_4_cuddle_hd.png" alt="Panda cuddles with bow" class="panda-img">
+                    </div>
+
+                    <!-- Gratitude Pills -->
+                    <div class="gratitude-list">
+                        <div class="gratitude-pill">
+                            <div class="gratitude-icon-wrap icon-pink">💖</div>
+                            <span>You always support me...</span>
+                        </div>
+                        <div class="gratitude-pill">
+                            <div class="gratitude-icon-wrap icon-yellow">⭐</div>
+                            <span>You always believe in me...</span>
+                        </div>
+                        <div class="gratitude-pill">
+                            <div class="gratitude-icon-wrap icon-blue">😊</div>
+                            <span>You always listen to me...</span>
+                        </div>
+                        <div class="gratitude-pill">
+                            <div class="gratitude-icon-wrap icon-flower">🌸</div>
+                            <span>You make my days brighter...</span>
+                        </div>
+                    </div>
+
+                    <div class="card-message-box" style="background: rgba(255, 255, 255, 0.9);">
+                        <p>You are an amazing friend and</p>
+                        <p><strong>I'm so lucky to have you ❤️</strong></p>
+                    </div>
+
+                    <div class="card-counter-pill">4/5</div>
+                </article>
+
+                <!-- ================= CARD 5 / 5 ================= -->
+                <article class="card-item card-5" data-card="5">
+                    <div class="card-top-accent"></div>
+                    <span class="card-float-heart" style="top: 15px; left: 15px;">🎀</span>
+                    <span class="card-float-heart" style="top: 30px; right: 20px;">💖</span>
+
+                    <div class="card-5-header">
+                        <h2 class="card-title-large">Will You Forgive Me?</h2>
+                    </div>
+
+                    <!-- Pandas with Heart Cushions -->
+                    <div class="panda-illustration-wrap">
+                        <img src="assets/panda_5_hearts_hd.png" alt="Pandas with SORRY and FRIENDS FOREVER hearts" class="panda-img">
+                    </div>
+
+                    <!-- Interactive Decision Buttons -->
+                    <div class="forgiveness-actions">
+                        <button class="btn-decision btn-yes-forgive" id="btnYesForgive">
+                            <span>✔</span>
+                            <span>Yes, I Forgive You Antu Aaka ❤️</span>
+                        </button>
+                        
+                        <button class="btn-decision btn-always-friend" id="btnAlwaysFriend">
+                            <span>❤️</span>
+                            <span>Always Your Friend</span>
+                        </button>
+
+                        <button class="btn-playful-no" id="btnPlayfulNo">
+                            <span>Still Thinking... 🙈</span>
+                        </button>
+                    </div>
+
+                    <!-- Sunset bench scene -->
+                    <div class="sunset-scene-wrap">
+                        <img src="assets/panda_5_sunset_hd.png" alt="Pandas watching sunset on wooden bench" class="sunset-img">
+                    </div>
+
+                    <div class="card-message-box" style="margin-top: 6px; padding: 8px 12px; font-size: 0.88rem;">
+                        <p>No matter what...</p>
+                        <p><strong>Our friendship will always stay Special ❤️</strong></p>
+                    </div>
+
+                    <div class="card-counter-pill">5/5</div>
+                </article>
+
+            </div><!-- /.carousel-stage -->
+
+            <!-- Middle Right Arrow for Sliding -->
+            <button class="nav-arrow-btn arrow-next" id="nextCardBtn" title="Next Card" aria-label="Next Card">
+                <span>›</span>
+            </button>
+
+        </div><!-- /.carousel-stage-wrapper -->
+
+        <!-- Bottom Action Pill & Hint -->
+        <div class="carousel-bottom-bar">
+            <button class="action-pill-btn" id="shareCardBtn">
+                <span>💌</span>
+                <span>Share With Antu</span>
+            </button>
+            <div class="slide-hint-text">
+                <span>👈 Swipe or tap arrows to slide 👉</span>
+            </div>
+        </div>
+    </div>
+
+        <!-- PANORAMIC ALL 5 CARDS VIEW (Side by side bookmark set) -->
+        <div class="panoramic-view" id="panoramicView">
+            <div class="panoramic-container" id="panoramicContainer">
+                <!-- Cloned content of cards 1-5 will be mirrored or displayed in panoramic layout -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ==========================================================================
+         MODAL 1: CELEBRATION MODAL (Triggered when "Yes, I Forgive You" is clicked)
+         ========================================================================== -->
+    <div class="modal-backdrop" id="celebrationModal">
+        <div class="modal-card">
+            <button class="modal-close-btn" id="closeCelebrationBtn">✕</button>
+            <img src="assets/panda_celebration_hug.jpg" alt="Pandas celebrating hug" class="celebration-panda-img">
+            <h2 class="celebration-title">Friendship Restored Forever! 🎉</h2>
+            <p class="celebration-text">
+                Thank you so much, <strong>Antu Aaka</strong>! ❤️<br>
+                Your forgiveness means the entire world to me. I promise to cherish our bond, make you smile, and be the best friend you deserve! 🐼✨
+            </p>
+            <div class="celebration-buttons">
+                <button class="btn-decision btn-yes-forgive" id="viewCertificateBtn">
+                    <span>📜</span>
+                    <span>View Friendship Certificate</span>
+                </button>
+                <button class="btn-decision btn-always-friend" id="sendWhatsAppReplyBtn">
+                    <span>💬</span>
+                    <span>Send Sweet WhatsApp Reply</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         MODAL 2: FRIENDSHIP CERTIFICATE MODAL
+         ========================================================================== -->
+    <div class="modal-backdrop" id="certificateModal">
+        <div class="modal-card">
+            <button class="modal-close-btn" id="closeCertBtn">✕</button>
+            <div class="certificate-frame" id="printableCertificate">
+                <div class="cert-header">Official Certificate of Forgiveness</div>
+                <div class="cert-body">This certifies that all misunderstandings are dissolved and unconditional friendship is granted to</div>
+                <div class="cert-recipient">Antasmita Roy (Antu Aaka)</div>
+                <div class="cert-body">
+                    with unlimited hugs, unwavering trust, eternal laughter, and sweet panda cuddles forever and ever!
+                </div>
+                <div class="cert-seal">🏅 🐼 ❤️</div>
+                <div style="font-size: 0.8rem; color: #8A7050; margin-top: 6px;">
+                    Sealed with love & sincere promises ✨
+                </div>
+            </div>
+            <button class="btn-decision btn-yes-forgive" id="printCertBtn" style="width: 100%;">
+                <span>🖨️</span>
+                <span>Print / Save Certificate</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         MODAL 3: PERSONAL NOTE / CUSTOMIZER MODAL
+         ========================================================================== -->
+    <div class="modal-backdrop" id="letterModal">
+        <div class="modal-card">
+            <button class="modal-close-btn" id="closeLetterBtn">✕</button>
+            <h2 class="celebration-title" style="font-size: 2rem;">A Personal Letter 💌</h2>
+            <div style="text-align: left; background: #FFF5F7; padding: 18px; border-radius: 16px; margin: 12px 0; border: 1px dashed #FFCCD5; font-size: 0.95rem; line-height: 1.6; color: #4A3337;">
+                <p>Dear <strong>Antasmita Roy (Antu Aaka)</strong>,</p>
+                <p style="margin-top: 8px;">
+                    True friends like you come once in a lifetime. I know words alone can't undo mistakes, but I promise from the bottom of my heart that I will always value, respect, and stand by you.
+                </p>
+                <p style="margin-top: 8px;">
+                    Thank you for being the sweetest, brightest light in my life. Never forget how special you are to me! ❤️🐼
+                </p>
+                <p style="margin-top: 14px; font-weight: 700; text-align: right;">
+                    Your Best Friend Forever ✨
+                </p>
+            </div>
+            <button class="btn-decision btn-always-friend" id="copyLetterBtn" style="width: 100%;">
+                <span>📋</span>
+                <span>Copy This Message</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notice -->
+    <div class="toast-notice" id="toastNotice">
+        <span id="toastIcon">✨</span>
+        <span id="toastMsg">Notification message</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="audio.js"></script>
+    <script src="confetti.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
