@@ -357,6 +357,66 @@ body {
     border: 1px solid rgba(255, 182, 193, 0.4);
 }
 
+/* Quick Page Navigation (Tabs 1 to 5) */
+.page-quick-nav {
+    display: flex;
+    gap: clamp(4px, 1.2vw, 8px);
+    width: 100%;
+    margin-top: 4px;
+    justify-content: space-between;
+}
+
+.page-nav-pill {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(255, 182, 193, 0.55);
+    border-radius: 20px;
+    padding: 4px 6px;
+    font-size: clamp(0.68rem, 2vw, 0.76rem);
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    transition: all 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    white-space: nowrap;
+}
+
+.page-nav-pill .pill-num {
+    background: #FFE0E6;
+    color: var(--primary-deep);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.68rem;
+    font-weight: 700;
+}
+
+.page-nav-pill:hover {
+    background: #FFF;
+    border-color: var(--primary-pink);
+    transform: translateY(-1px);
+}
+
+.page-nav-pill.active {
+    background: var(--primary-deep);
+    color: #fff;
+    border-color: var(--primary-deep);
+    box-shadow: 0 3px 10px rgba(255, 75, 114, 0.32);
+    transform: translateY(-1px);
+}
+
+.page-nav-pill.active .pill-num {
+    background: #fff;
+    color: var(--primary-deep);
+}
+
+
 /* ==========================================================================
    CAROUSEL CONTAINER & CARD ITEM ARCHITECTURE (No Clipping!)
    ========================================================================== */
@@ -382,7 +442,7 @@ body {
 /* Card item defaults */
 .card-item {
     width: 100%;
-    max-width: 400px;
+    max-width: 390px;
     height: auto;
     background: #FFF;
     border-radius: var(--radius-card);
@@ -391,7 +451,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: clamp(12px, 2vh, 18px) clamp(10px, 3vw, 16px) clamp(10px, 1.5vh, 14px);
+    padding: clamp(10px, 1.8vh, 14px) clamp(8px, 2.5vw, 14px);
     border: 2px solid #FFF;
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
@@ -434,349 +494,212 @@ body {
     background: linear-gradient(180deg, #FFE8EF 0%, #FFF4F7 40%, #FFF0F4 100%);
 }
 
-.card-top-accent {
-    position: absolute;
-    top: -15px;
-    right: -15px;
-    width: 70px;
-    height: 70px;
-    background: radial-gradient(circle, rgba(255, 182, 193, 0.35) 0%, transparent 70%);
-    pointer-events: none;
-}
-
-.card-float-heart {
-    position: absolute;
-    font-size: clamp(0.75rem, 2.2vw, 0.95rem);
-    opacity: 0.35;
-    pointer-events: none;
-    animation: floatSlow 3s infinite ease-in-out alternate;
-}
-
-/* ==========================================================================
-   CARD 1 SPECIFIC STYLING
-   ========================================================================== */
-.card-1-header {
-    text-align: center;
-    margin-bottom: 3px;
-    position: relative;
-}
-
-.script-sub {
-    font-family: 'Caveat', cursive;
-    font-size: clamp(1.15rem, 3.8vw, 1.4rem);
-    color: var(--text-muted);
-    line-height: 1;
-}
-
-.recipient-name {
-    font-family: 'Caveat', cursive;
-    font-size: clamp(1.75rem, 6vw, 2.3rem);
+/* Individual Card Page Header Badge */
+.card-page-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 182, 193, 0.6);
+    border-radius: 20px;
+    padding: 3px 12px;
+    margin: 0 auto clamp(6px, 1vh, 10px);
+    font-size: clamp(0.72rem, 2.2vw, 0.82rem);
     font-weight: 700;
     color: var(--primary-deep);
-    line-height: 1.1;
-    margin-top: 1px;
-    text-shadow: 0 2px 6px rgba(255, 75, 114, 0.15);
+    box-shadow: 0 2px 8px rgba(255, 107, 139, 0.12);
 }
 
-.recipient-nickname {
-    font-size: clamp(0.9rem, 3vw, 1.1rem);
-    color: var(--text-dark);
-    font-weight: 700;
-}
-
-.heart-badge-wrap {
-    margin: 4px auto;
-    display: inline-flex;
+/* Card Art Stage (The Bookmark Display) */
+.card-art-stage {
+    position: relative;
+    display: flex;
     justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    cursor: pointer;
 }
 
-.heart-badge {
-    background: #FFF;
-    border: 1.5px solid #FFCCD5;
-    padding: 3px 10px;
+.card-page-art {
+    display: block;
+    height: clamp(470px, 64vh, 590px);
+    width: auto;
+    max-width: 95%;
+    object-fit: contain;
     border-radius: 20px;
-    font-size: clamp(0.72rem, 2.2vw, 0.82rem);
+    box-shadow: 0 10px 28px rgba(186, 73, 98, 0.18), 0 3px 8px rgba(0, 0, 0, 0.05);
+    border: 3px solid rgba(255, 255, 255, 0.95);
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.card-art-stage:active .card-page-art {
+    transform: scale(0.985);
+}
+
+/* Interactive Hint floating on art */
+.art-interactive-hint {
+    position: absolute;
+    bottom: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 107, 139, 0.4);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 0.72rem;
     font-weight: 600;
     color: var(--primary-deep);
-    box-shadow: 0 2px 6px rgba(255, 107, 139, 0.12);
+    pointer-events: none;
+    box-shadow: 0 2px 8px rgba(255, 107, 139, 0.2);
+    animation: gentlePulse 2s infinite ease-in-out;
+}
+
+/* Interactive Hotspots */
+.card-hotspot {
+    position: absolute;
+    left: 8%;
+    width: 84%;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: background 0.2s, transform 0.15s;
+    z-index: 5;
+}
+
+.card-hotspot:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.card-hotspot:active {
+    background: rgba(255, 107, 139, 0.2);
+    transform: scale(0.98);
+}
+
+/* Hotspots directly on Card 5 Buttons */
+.art-hotspot-btn {
+    position: absolute;
+    left: 8%;
+    width: 84%;
+    height: 7.5%;
+    border: none;
+    border-radius: 24px;
+    background: transparent;
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.2s;
+    outline: none;
+}
+
+.hotspot-green-forgive {
+    top: 45%;
+}
+
+.hotspot-pink-always {
+    top: 53.6%;
+}
+
+.art-hotspot-btn:active {
+    transform: scale(0.95);
+}
+
+.art-hotspot-btn .hotspot-pulse {
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    border: 2px solid transparent;
+    animation: pulseBorder 2s infinite ease-in-out;
+    pointer-events: none;
+}
+
+.hotspot-green-forgive .hotspot-pulse {
+    border-color: rgba(78, 186, 135, 0.7);
+}
+
+.hotspot-pink-always .hotspot-pulse {
+    border-color: rgba(255, 112, 150, 0.7);
+}
+
+@keyframes pulseBorder {
+    0%, 100% { opacity: 0.3; transform: scale(0.98); }
+    50% { opacity: 0.95; transform: scale(1.02); }
+}
+
+/* Card Bottom Action Buttons & Pills */
+.card-bottom-actions {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: clamp(6px, 1vh, 10px);
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.btn-card-action {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(255, 182, 193, 0.55);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: clamp(0.72rem, 2.2vw, 0.8rem);
+    font-weight: 600;
+    color: var(--text-dark);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(255, 107, 139, 0.1);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: inline-flex;
     align-items: center;
     gap: 4px;
 }
 
-.panda-illustration-wrap {
-    position: relative;
-    width: 100%;
-    margin: clamp(6px, 1.2vh, 12px) 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 18px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.5);
-    box-shadow: 0 4px 16px rgba(255, 107, 139, 0.12);
-    border: 1.5px solid rgba(255, 255, 255, 0.85);
+.btn-card-action:hover {
+    background: #FFF;
+    border-color: var(--primary-pink);
+    transform: translateY(-1px);
 }
 
-.panda-img {
-    width: 100%;
-    max-width: 350px;
-    height: auto;
-    max-height: clamp(165px, 26vh, 245px);
-    object-fit: contain;
-    border-radius: 14px;
-    transition: transform 0.25s ease;
-    filter: drop-shadow(0 4px 12px rgba(200, 100, 130, 0.12));
-    display: block;
+.btn-card-action:active {
+    transform: scale(0.95);
+    background: #FFF;
+    border-color: var(--primary-deep);
+    color: var(--primary-deep);
 }
 
-.panda-illustration-wrap:active .panda-img {
-    transform: scale(1.02);
-}
-
-.card-message-box {
+.reflection-quote-pill {
     background: rgba(255, 255, 255, 0.9);
-    border-radius: 14px;
-    padding: clamp(6px, 1.2vh, 10px) clamp(8px, 2.5vw, 14px);
-    text-align: center;
     border: 1px solid rgba(255, 182, 193, 0.45);
-    box-shadow: 0 2px 8px rgba(255, 107, 139, 0.08);
-    font-size: clamp(0.8rem, 2.4vw, 0.9rem);
-    line-height: 1.35;
-    color: var(--text-dark);
-    margin: 4px 0;
-}
-
-.card-message-box p {
-    margin-bottom: 2px;
-}
-
-.card-message-box strong {
+    border-radius: 16px;
+    padding: 4px 12px;
+    font-size: clamp(0.72rem, 2.1vw, 0.8rem);
+    font-weight: 600;
     color: var(--primary-deep);
-    font-size: clamp(0.86rem, 2.7vw, 1rem);
-}
-
-/* ==========================================================================
-   CARD 2 SPECIFIC STYLING
-   ========================================================================== */
-.card-2-header {
     text-align: center;
-    margin-bottom: 3px;
+    max-width: 90%;
+    box-shadow: 0 2px 6px rgba(255, 107, 139, 0.08);
 }
 
-.card-title-medium {
-    font-family: 'Caveat', cursive;
-    font-size: clamp(1.25rem, 4.2vw, 1.55rem);
-    color: var(--text-dark);
-    line-height: 1.15;
-}
-
-.notes-list {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(4px, 0.8vh, 6px);
-    margin: 4px 0;
-}
-
-.sticky-note-item {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 10px;
-    padding: clamp(5px, 0.9vh, 7px) clamp(8px, 2.5vw, 12px);
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    box-shadow: 0 2px 6px rgba(210, 150, 80, 0.08);
-    border: 1px solid rgba(240, 200, 140, 0.4);
-    font-size: clamp(0.74rem, 2.3vw, 0.84rem);
-    line-height: 1.25;
-    color: #553D2A;
-    cursor: pointer;
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.sticky-note-item:active {
-    transform: scale(0.98);
-    background: #FFF;
-    border-color: #E89A4E;
-}
-
-.note-icon {
-    font-size: clamp(1rem, 3vw, 1.2rem);
-    flex-shrink: 0;
-}
-
-/* ==========================================================================
-   CARD 3 SPECIFIC STYLING
-   ========================================================================== */
-.card-3-header {
-    text-align: center;
-    margin-bottom: 2px;
-}
-
-.card-title-large {
-    font-family: 'Caveat', cursive;
-    font-size: clamp(1.55rem, 5.2vw, 2.05rem);
+.promise-seal-btn {
+    background: linear-gradient(135deg, #FFE0E6 0%, #FFD6E0 100%);
     color: var(--primary-deep);
-    line-height: 1.1;
-    font-weight: 700;
+    border-color: #FFB6C1;
 }
 
-.notepad-container {
-    background: #FFF;
-    border-radius: 12px;
-    padding: clamp(6px, 1vh, 10px) clamp(8px, 2.5vw, 12px);
-    box-shadow: 0 3px 10px rgba(255, 107, 139, 0.1);
-    border: 1.5px dashed #FFCCD5;
-    margin: 4px 0;
-    position: relative;
-}
-
-.notepad-title {
-    font-family: 'Caveat', cursive;
-    font-size: clamp(1.2rem, 3.8vw, 1.45rem);
-    font-weight: 700;
-    color: var(--text-dark);
-    margin-bottom: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.promise-counter-badge {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 0.7rem;
-    background: #FFE0E6;
-    color: var(--primary-deep);
+.promise-seal-btn .seal-badge {
+    background: var(--primary-deep);
+    color: #fff;
     padding: 1px 6px;
     border-radius: 10px;
-}
-
-.promise-list {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(3px, 0.6vh, 5px);
-}
-
-.promise-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: clamp(0.74rem, 2.3vw, 0.84rem);
-    color: var(--text-dark);
-    cursor: pointer;
-    padding: 2px 4px;
-    border-radius: 6px;
-    transition: background 0.15s;
-    user-select: none;
-    min-height: 28px;
-}
-
-.promise-item:active {
-    background: #FFF0F3;
-}
-
-.promise-checkbox {
-    width: 17px;
-    height: 17px;
-    border-radius: 4px;
-    border: 1.6px solid var(--primary-pink);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.72rem;
-    color: #fff;
-    background: #FFF;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-}
-
-.promise-item.checked .promise-checkbox {
-    background: var(--primary-deep);
-    border-color: var(--primary-deep);
-}
-
-.promise-item.checked span {
-    font-weight: 600;
-    color: var(--text-pink);
-}
-
-.bottom-pill-badge {
-    background: linear-gradient(135deg, #FFE3EB 0%, #FFD2DF 100%);
-    border-radius: 16px;
-    padding: 5px 10px;
-    text-align: center;
-    font-size: clamp(0.72rem, 2.2vw, 0.8rem);
-    font-weight: 600;
-    color: var(--primary-deep);
-    box-shadow: 0 2px 6px rgba(255, 107, 139, 0.1);
-    border: 1px solid rgba(255, 182, 193, 0.5);
-    margin: 3px 0;
+    font-size: 0.68rem;
+    font-weight: 700;
 }
 
 /* ==========================================================================
-   CARD 4 SPECIFIC STYLING
+   FORGIVENESS DECISION BUTTONS (Card 5)
    ========================================================================== */
-.card-4-header {
-    text-align: center;
-    margin-bottom: 2px;
-}
-
-.gratitude-list {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(4px, 0.8vh, 6px);
-    margin: 4px 0;
-}
-
-.gratitude-pill {
-    background: #FFF;
-    border-radius: 10px;
-    padding: clamp(5px, 0.9vh, 7px) clamp(8px, 2.5vw, 12px);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 2px 6px rgba(230, 130, 80, 0.08);
-    border: 1px solid rgba(255, 200, 160, 0.4);
-    font-size: clamp(0.75rem, 2.3vw, 0.86rem);
-    font-weight: 500;
-    color: #553D2A;
-    transition: transform 0.2s ease;
-    cursor: pointer;
-}
-
-.gratitude-pill:active {
-    transform: scale(0.98);
-}
-
-.gratitude-icon-wrap {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
-    flex-shrink: 0;
-}
-
-.icon-pink { background: #FFE0E9; }
-.icon-yellow { background: #FFF4D0; }
-.icon-blue { background: #E0F2FE; }
-.icon-flower { background: #FFEAF2; }
-
-/* ==========================================================================
-   CARD 5 SPECIFIC STYLING (No Cutoff on Buttons or Sunset Scene)
-   ========================================================================== */
-.card-5-header {
-    text-align: center;
-    margin-bottom: 2px;
-}
-
 .forgiveness-actions {
     display: flex;
     flex-direction: column;
     gap: clamp(5px, 0.9vh, 8px);
-    margin: 4px 0;
+    margin: 8px 0 2px;
     position: relative;
     width: 100%;
 }
@@ -832,35 +755,6 @@ body {
     display: inline-block;
 }
 
-.sunset-scene-wrap {
-    margin-top: 6px;
-    border-radius: 14px;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0 3px 12px rgba(255, 140, 100, 0.18);
-    border: 1.5px solid rgba(255, 255, 255, 0.85);
-}
-
-.sunset-img {
-    width: 100%;
-    height: auto;
-    max-height: clamp(80px, 14vh, 125px);
-    object-fit: cover;
-    display: block;
-}
-
-/* Card Counter Badge at Bottom */
-.card-counter-pill {
-    align-self: center;
-    background: rgba(180, 120, 130, 0.35);
-    color: #FFF;
-    font-size: clamp(0.7rem, 2vw, 0.78rem);
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 16px;
-    margin-top: 6px;
-    backdrop-filter: blur(4px);
-}
 
 /* ==========================================================================
    CAROUSEL MIDDLE SLIDING ARROWS & BOTTOM BAR
@@ -1000,26 +894,71 @@ body {
     border-radius: 10px;
 }
 
-.panoramic-container {
-    display: flex;
-    gap: clamp(10px, 2.5vw, 16px);
-    min-width: max-content;
-    margin: 0 auto;
-    justify-content: flex-start;
+.panoramic-header-banner {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 12px;
+    padding: 6px 12px;
 }
 
-.panoramic-container .card-item {
-    position: relative;
-    width: clamp(230px, 78vw, 270px);
-    height: auto;
-    min-height: 480px;
-    padding: clamp(12px, 1.8vh, 16px) clamp(8px, 2vw, 12px);
+.panoramic-header-banner h3 {
+    font-size: clamp(1.05rem, 3.2vw, 1.35rem);
+    color: var(--primary-deep);
+    margin-bottom: 4px;
+}
+
+.panoramic-header-banner p {
+    font-size: clamp(0.74rem, 2.2vw, 0.84rem);
+    color: var(--text-muted);
+}
+
+.panoramic-container {
+    display: flex;
+    gap: clamp(10px, 2.5vw, 18px);
+    min-width: max-content;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 6px 4px 18px;
+}
+
+.panoramic-card-thumb {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #FFF;
+    padding: 8px 8px 12px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-card);
+    border: 2px solid rgba(255, 255, 255, 0.95);
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease;
     flex-shrink: 0;
     scroll-snap-align: center;
-    transform: none !important;
-    opacity: 1 !important;
-    pointer-events: auto !important;
-    display: flex !important;
+}
+
+.panoramic-card-thumb:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 16px 36px rgba(186, 73, 98, 0.25);
+    border-color: var(--primary-pink);
+}
+
+.panoramic-card-thumb img {
+    height: clamp(380px, 58vh, 520px);
+    width: auto;
+    border-radius: 14px;
+    display: block;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.panoramic-thumb-label {
+    margin-top: 8px;
+    font-size: clamp(0.74rem, 2vw, 0.84rem);
+    font-weight: 700;
+    color: var(--primary-deep);
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
 /* Mode toggling */
@@ -1032,6 +971,7 @@ body.mode-panoramic .panoramic-view {
 body.mode-panoramic .story-header {
     display: none;
 }
+
 
 /* ==========================================================================
    MODALS: CELEBRATION, CERTIFICATE, PERSONAL LETTER
@@ -1229,6 +1169,50 @@ body.mode-panoramic .story-header {
 @keyframes floatUp {
     0% { opacity: 0; transform: translateY(16px) scale(0.96); }
     100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Zoom & Download Card Modal */
+.zoom-modal-card {
+    max-width: 440px;
+    width: 94%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 14px;
+}
+
+.zoom-title {
+    font-size: clamp(1.15rem, 3.4vw, 1.45rem);
+    margin-bottom: 8px;
+    margin-top: 4px;
+}
+
+.zoom-img-wrapper {
+    width: 100%;
+    max-height: 64vh;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+    background: rgba(255, 240, 243, 0.6);
+    padding: 8px;
+    margin-bottom: 12px;
+}
+
+.zoom-preview-img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    max-height: 58vh;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.zoom-modal-actions {
+    width: 100%;
 }
 
 /* Print Styles */

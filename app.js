@@ -1,5 +1,5 @@
-// Main Application Logic for Antasmita Roy (Antu Aaka) Forgiveness Experience
-// Fully optimized for mobile screens, touch swipe gestures & haptics
+// Main Application Logic for Antasmita Roy (Antu Aaka) - Individual Pages & Full Card Experience
+// Optimized for mobile touch swipe gestures, haptics, responsive scaling, and interactive hotspots
 
 document.addEventListener('DOMContentLoaded', () => {
     // State
@@ -15,16 +15,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevBtn = document.getElementById('prevCardBtn');
     const nextBtn = document.getElementById('nextCardBtn');
     const progressSegments = document.querySelectorAll('.progress-segment');
+    const pageNavPills = document.querySelectorAll('.page-nav-pill');
     const storyCounterText = document.getElementById('storyCounterText');
     const viewModeBtn = document.getElementById('viewModeBtn');
     const modeIcon = document.getElementById('modeIcon');
     const modeText = document.getElementById('modeText');
     const audioToggleBtn = document.getElementById('audioToggleBtn');
-    const bouquetWrap = document.getElementById('bouquetWrap');
-    const promiseItems = document.querySelectorAll('.promise-item');
-    const promiseBadge = document.getElementById('promiseBadge');
     
-    // Action Buttons
+    // Card 1 Elements
+    const bouquetWrap = document.getElementById('bouquetWrap');
+    const btnShowerPetals1 = document.getElementById('btnShowerPetals1');
+
+    // Card 3 Elements
+    const sealPromisesBtn = document.getElementById('sealPromisesBtn');
+    const promiseBadge = document.getElementById('promiseBadge');
+
+    // Card 5 Decision Elements
+    const artHotspotForgive = document.getElementById('artHotspotForgive');
+    const artHotspotAlways = document.getElementById('artHotspotAlways');
     const btnYesForgive = document.getElementById('btnYesForgive');
     const btnAlwaysFriend = document.getElementById('btnAlwaysFriend');
     const btnPlayfulNo = document.getElementById('btnPlayfulNo');
@@ -45,6 +53,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeLetterBtn = document.getElementById('closeLetterBtn');
     const copyLetterBtn = document.getElementById('copyLetterBtn');
 
+    const zoomModal = document.getElementById('zoomModal');
+    const closeZoomBtn = document.getElementById('closeZoomBtn');
+    const zoomModalTitle = document.getElementById('zoomModalTitle');
+    const zoomPreviewImg = document.getElementById('zoomPreviewImg');
+    const downloadCardBtn = document.getElementById('downloadCardBtn');
+
     const toastNotice = document.getElementById('toastNotice');
     const toastMsg = document.getElementById('toastMsg');
     const toastIcon = document.getElementById('toastIcon');
@@ -58,43 +72,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Start background ambient particles
+    // Start background ambient floating hearts
     if (window.cuteConfetti) {
         window.cuteConfetti.startAmbient();
     }
 
-    // Populate Panoramic View by duplicating cards into container
+    // 1. POPULATE PANORAMIC ALL-5-CARDS VIEW
+    const cardSetData = [
+        { id: 1, title: 'Page 1 • A Special Sorry Card 🌸', img: 'assets/card_page_1_hd.png' },
+        { id: 2, title: 'Page 2 • My Sincere Reflections 🥺', img: 'assets/card_page_2_hd.png' },
+        { id: 3, title: 'Page 3 • Sincere Promises 📝', img: 'assets/card_page_3_hd.png' },
+        { id: 4, title: 'Page 4 • Thank You Always 🌟', img: 'assets/card_page_4_hd.png' },
+        { id: 5, title: 'Page 5 • Will You Forgive Me? 💖', img: 'assets/card_page_5_hd.png' }
+    ];
+
     const panoramicContainer = document.getElementById('panoramicContainer');
     if (panoramicContainer) {
-        cards.forEach((card) => {
-            const clone = card.cloneNode(true);
-            clone.classList.remove('active', 'prev-card');
-            
-            // Re-bind interactive checklist in cloned cards
-            const clonedPromises = clone.querySelectorAll('.promise-item');
-            clonedPromises.forEach(item => {
-                item.addEventListener('click', () => {
-                    item.classList.toggle('checked');
-                    triggerHaptic(15);
-                    if (window.cuteAudio) window.cuteAudio.playCheckPop();
-                });
+        panoramicContainer.innerHTML = '';
+        cardSetData.forEach((item, idx) => {
+            const thumb = document.createElement('div');
+            thumb.className = 'panoramic-card-thumb';
+            thumb.setAttribute('title', `Tap to open ${item.title}`);
+            thumb.innerHTML = `
+                <img src="${item.img}" alt="${item.title}" loading="lazy">
+                <div class="panoramic-thumb-label">
+                    <span>${item.title}</span>
+                </div>
+            `;
+            thumb.addEventListener('click', () => {
+                triggerHaptic(15);
+                document.body.classList.remove('mode-panoramic');
+                modeIcon.textContent = '📑';
+                modeText.textContent = 'All 5';
+                updateCard(idx);
+                showToast(`Opened ${item.title}`, '📖');
             });
-
-            // Re-bind buttons in cloned card 5
-            const clonedYes = clone.querySelector('#btnYesForgive');
-            if (clonedYes) {
-                clonedYes.addEventListener('click', handleForgiveSuccess);
-            }
-            const clonedAlways = clone.querySelector('#btnAlwaysFriend');
-            if (clonedAlways) {
-                clonedAlways.addEventListener('click', handleAlwaysFriend);
-            }
-
-            panoramicContainer.appendChild(clone);
+            panoramicContainer.appendChild(thumb);
         });
     }
 
-    // 1. OPEN ENVELOPE EVENT
+    // 2. OPEN ENVELOPE EVENT
     openCardBtn.addEventListener('click', () => {
         triggerHaptic([30, 50, 30]);
         if (window.cuteAudio) {
@@ -110,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast('Welcome Antasmita Roy (Antu Aaka)! 🐼❤️', '💌');
     });
 
-    // 2. AUDIO TOGGLE
+    // 3. AUDIO TOGGLE
     audioToggleBtn.addEventListener('click', () => {
         triggerHaptic(15);
         if (!window.cuteAudio) return;
@@ -126,12 +143,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 3. CAROUSEL NAVIGATION (Smooth & Mobile Gestures)
+    // 4. INDIVIDUAL PAGE CAROUSEL NAVIGATION
     function updateCard(index) {
         if (index < 0 || index >= totalCards) return;
         currentCardIndex = index;
         triggerHaptic(12);
 
+        // Update cards active state
         cards.forEach((card, idx) => {
             card.classList.remove('active', 'prev-card');
             if (idx === currentCardIndex) {
@@ -151,10 +169,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Update counter text
-        storyCounterText.textContent = `${currentCardIndex + 1} / ${totalCards}`;
+        // Update page quick nav pills
+        pageNavPills.forEach((pill, idx) => {
+            pill.classList.toggle('active', idx === currentCardIndex);
+        });
 
-        // Update buttons
+        // Update counter text
+        storyCounterText.textContent = `Page ${currentCardIndex + 1} / ${totalCards}`;
+
+        // Update prev/next navigation arrow states
         prevBtn.disabled = currentCardIndex === 0;
         nextBtn.disabled = currentCardIndex === totalCards - 1;
 
@@ -171,9 +194,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentCardIndex < totalCards - 1) updateCard(currentCardIndex + 1);
     });
 
-    // Click on progress segments to jump
+    // Click on progress segments to jump directly
     progressSegments.forEach((segment, idx) => {
         segment.addEventListener('click', () => updateCard(idx));
+    });
+
+    // Click on quick page selector tabs
+    pageNavPills.forEach((pill, idx) => {
+        pill.addEventListener('click', () => updateCard(idx));
     });
 
     // Keyboard navigation (Arrow keys & Space)
@@ -186,105 +214,138 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Mobile Swipe Gesture Support (Intelligent angle check to avoid vertical scroll conflict)
+    // Mobile Swipe Gesture Support
     let touchStartX = 0;
     let touchStartY = 0;
     let touchEndX = 0;
     let touchEndY = 0;
     const carouselStage = document.querySelector('.carousel-stage');
 
-    carouselStage.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].clientX;
-        touchStartY = e.changedTouches[0].clientY;
-    }, { passive: true });
+    if (carouselStage) {
+        carouselStage.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].clientX;
+            touchStartY = e.changedTouches[0].clientY;
+        }, { passive: true });
 
-    carouselStage.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].clientX;
-        touchEndY = e.changedTouches[0].clientY;
-        handleSwipe();
-    }, { passive: true });
+        carouselStage.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].clientX;
+            touchEndY = e.changedTouches[0].clientY;
+            handleSwipe();
+        }, { passive: true });
+    }
 
     function handleSwipe() {
         const diffX = touchEndX - touchStartX;
         const diffY = touchEndY - touchStartY;
-        const threshold = 40;
+        const threshold = 35;
 
-        // Ensure horizontal intent is dominant over vertical scrolling
+        // Ensure horizontal intent is dominant
         if (Math.abs(diffX) > Math.abs(diffY) * 1.2 && Math.abs(diffX) > threshold) {
             if (diffX < 0) {
-                // Swiped Left -> Next Card
+                // Swiped Left -> Next Page
                 if (currentCardIndex < totalCards - 1) updateCard(currentCardIndex + 1);
             } else {
-                // Swiped Right -> Previous Card
+                // Swiped Right -> Previous Page
                 if (currentCardIndex > 0) updateCard(currentCardIndex - 1);
             }
         }
     }
 
-    // 4. VIEW MODE TOGGLE (Story vs Panoramic)
+    // 5. VIEW MODE TOGGLE (Individual Pages vs All 5 Panoramic)
     viewModeBtn.addEventListener('click', () => {
         triggerHaptic(15);
         const isPanoramic = document.body.classList.toggle('mode-panoramic');
         if (isPanoramic) {
-            modeIcon.textContent = '📱';
-            modeText.textContent = 'Story';
-            showToast('Swipe horizontally to see all 5 cards 📑', '📑');
+            modeIcon.textContent = '📖';
+            modeText.textContent = 'Story Pages';
+            showToast('Showing all 5 bookmarks side by side 📑', '📑');
         } else {
             modeIcon.textContent = '📑';
-            modeText.textContent = 'All 5';
-            showToast('Showing story walkthrough mode 📱', '📱');
+            modeText.textContent = 'All 5 Cards';
+            showToast('Showing individual page story mode 📖', '📖');
         }
     });
 
-    // 5. INTERACTIVE BOUQUET (Card 1)
-    if (bouquetWrap) {
-        bouquetWrap.addEventListener('click', () => {
-            triggerHaptic([20, 30]);
-            const rect = bouquetWrap.getBoundingClientRect();
+    // 6. CARD 1: ROSE PETAL SHOWER INTERACTION
+    function triggerPetalShower(e) {
+        triggerHaptic([25, 35]);
+        const rect = bouquetWrap ? bouquetWrap.getBoundingClientRect() : { left: window.innerWidth / 2, top: 200, width: 0 };
+        const x = e && e.clientX ? e.clientX : (rect.left + rect.width / 2);
+        const y = e && e.clientY ? e.clientY : (rect.top + 50);
+
+        if (window.cuteConfetti) {
+            window.cuteConfetti.showerPetals(x, y);
+        }
+        if (window.cuteAudio) {
+            window.cuteAudio.playCheckPop();
+        }
+        showToast('Flowers & hugs for Antasmita Roy! 🌸🌹', '💐');
+    }
+
+    if (bouquetWrap) bouquetWrap.addEventListener('click', triggerPetalShower);
+    if (btnShowerPetals1) btnShowerPetals1.addEventListener('click', triggerPetalShower);
+
+    // 7. CARD 2: REFLECTION NOTES HOTSPOTS
+    const card2Hotspots = document.querySelectorAll('.card-2 .card-hotspot');
+    card2Hotspots.forEach(hotspot => {
+        hotspot.addEventListener('click', (e) => {
+            e.stopPropagation();
+            triggerHaptic(15);
+            const msg = hotspot.dataset.msg || "You're too special to me, Antu Aaka ❤️";
+            if (window.cuteAudio) window.cuteAudio.playCheckPop();
             if (window.cuteConfetti) {
-                window.cuteConfetti.showerPetals(rect.left + rect.width / 2, rect.top + 30);
+                const rect = hotspot.getBoundingClientRect();
+                window.cuteConfetti.showerPetals(rect.left + rect.width / 2, rect.top);
+            }
+            showToast(msg, '🥺');
+        });
+    });
+
+    // 8. CARD 3: PROMISES CHECKLIST & SEALING
+    const promiseHotspots = document.querySelectorAll('.promise-hotspot');
+    promiseHotspots.forEach(hotspot => {
+        hotspot.addEventListener('click', (e) => {
+            e.stopPropagation();
+            triggerHaptic(20);
+            if (window.cuteAudio) window.cuteAudio.playCheckPop();
+            if (window.cuteConfetti) {
+                const rect = hotspot.getBoundingClientRect();
+                window.cuteConfetti.showerPetals(rect.left + rect.width / 2, rect.top);
+            }
+            showToast(`Promise sealed: "${hotspot.title}" 💖`, '✓');
+        });
+    });
+
+    if (sealPromisesBtn) {
+        sealPromisesBtn.addEventListener('click', () => {
+            triggerHaptic([30, 40, 50]);
+            if (window.cuteConfetti) {
+                window.cuteConfetti.celebrate(window.innerWidth / 2, window.innerHeight * 0.4);
             }
             if (window.cuteAudio) {
-                window.cuteAudio.playCheckPop();
+                window.cuteAudio.playCelebrationFanfare();
             }
-            showToast('Flowers for you, Antu Aaka! 🌸💐', '🌹');
+            showToast('All 6 sincere promises sealed forever with love! 💖✨', '📜');
         });
     }
 
-    // 6. INTERACTIVE PROMISES CHECKLIST (Card 3)
-    promiseItems.forEach(item => {
-        item.addEventListener('click', () => {
-            item.classList.toggle('checked');
-            triggerHaptic(15);
-            if (window.cuteAudio) window.cuteAudio.playCheckPop();
-
-            const checkedCount = document.querySelectorAll('#promiseList .promise-item.checked').length;
-            promiseBadge.textContent = `${checkedCount}/6 Sealed`;
-
-            if (checkedCount === 6) {
-                triggerHaptic([30, 40, 50]);
-                if (window.cuteConfetti) {
-                    window.cuteConfetti.showerPetals(window.innerWidth / 2, 180);
-                }
-                showToast('All 6 sincere promises sealed with love! 💖', '✨');
-            }
-        });
-    });
-
-    // 7. INTERACTIVE REFLECTION & GRATITUDE NOTES
-    const interactiveNotes = document.querySelectorAll('.sticky-note-item, .gratitude-pill');
-    interactiveNotes.forEach(note => {
-        note.addEventListener('click', () => {
-            triggerHaptic(12);
+    // 9. CARD 4: GRATITUDE HOTSPOTS
+    const gratitudeHotspots = document.querySelectorAll('.gratitude-hotspot');
+    gratitudeHotspots.forEach(hotspot => {
+        hotspot.addEventListener('click', (e) => {
+            e.stopPropagation();
+            triggerHaptic(18);
+            const msg = hotspot.dataset.msg || "Thank you for being such a wonderful best friend! 🌟";
             if (window.cuteAudio) window.cuteAudio.playCheckPop();
             if (window.cuteConfetti) {
-                const rect = note.getBoundingClientRect();
+                const rect = hotspot.getBoundingClientRect();
                 window.cuteConfetti.showerPetals(rect.left + rect.width / 2, rect.top);
             }
+            showToast(msg, '⭐');
         });
     });
 
-    // 8. FORGIVENESS BUTTONS (Card 5)
+    // 10. CARD 5: FORGIVENESS CELEBRATION (HOTSPOTS & BUTTONS)
     function handleForgiveSuccess() {
         triggerHaptic([50, 80, 50, 100]);
         if (window.cuteAudio) {
@@ -308,13 +369,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.cuteConfetti) {
             window.cuteConfetti.celebrate(window.innerWidth / 2, window.innerHeight * 0.5);
         }
-        showToast('Friendship of a lifetime! Best friends forever! 🐼❤️', '✨');
+        showToast('Friendship of a lifetime! Best friends forever, Antu Aaka! 🐼❤️', '✨');
     }
 
-    btnYesForgive.addEventListener('click', handleForgiveSuccess);
-    btnAlwaysFriend.addEventListener('click', handleAlwaysFriend);
+    // Bind both illustration hotspots and action buttons
+    if (artHotspotForgive) artHotspotForgive.addEventListener('click', handleForgiveSuccess);
+    if (artHotspotAlways) artHotspotAlways.addEventListener('click', handleAlwaysFriend);
+    if (btnYesForgive) btnYesForgive.addEventListener('click', handleForgiveSuccess);
+    if (btnAlwaysFriend) btnAlwaysFriend.addEventListener('click', handleAlwaysFriend);
 
-    // Playful dodge button "Still Thinking... 🙈" (Mobile friendly bounded dodge)
+    // Playful dodge button "Still Thinking... 🙈"
     const playfulMessages = [
         "Wait, reconsider! 🥺",
         "Look at the cute puppy panda eyes! 🐼",
@@ -329,7 +393,7 @@ document.addEventListener('DOMContentLoaded', () => {
         triggerHaptic(25);
         playfulDodgeCount++;
         const msg = playfulMessages[playfulDodgeCount % playfulMessages.length];
-        btnPlayfulNo.querySelector('span').textContent = msg;
+        btnPlayfulNo.textContent = msg;
 
         // Keep displacement inside mobile bounds (max ±35px)
         const maxOffset = 35;
@@ -342,10 +406,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    btnPlayfulNo.addEventListener('mouseenter', dodgeButton);
-    btnPlayfulNo.addEventListener('click', dodgeButton);
+    if (btnPlayfulNo) {
+        btnPlayfulNo.addEventListener('mouseenter', dodgeButton);
+        btnPlayfulNo.addEventListener('click', dodgeButton);
+    }
 
-    // 9. MODALS MANAGEMENT
+    // 11. ZOOM & SAVE CARD MODAL
+    const zoomButtons = document.querySelectorAll('.zoom-trigger-btn');
+    zoomButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            triggerHaptic(15);
+            const imgSrc = btn.dataset.img;
+            const title = btn.dataset.title || 'Card Preview';
+            if (zoomPreviewImg) zoomPreviewImg.src = imgSrc;
+            if (zoomModalTitle) zoomModalTitle.textContent = title;
+            if (downloadCardBtn) {
+                downloadCardBtn.href = imgSrc;
+                downloadCardBtn.setAttribute('download', title.replace(/[^a-zA-Z0-9]/g, '_') + '.png');
+            }
+            if (zoomModal) zoomModal.classList.add('show');
+            if (window.cuteAudio) window.cuteAudio.playCardFlip();
+        });
+    });
+
+    if (closeZoomBtn && zoomModal) {
+        closeZoomBtn.addEventListener('click', () => {
+            triggerHaptic(10);
+            zoomModal.classList.remove('show');
+        });
+    }
+
+    // 12. CELEBRATION & CERTIFICATE MODALS
     closeCelebrationBtn.addEventListener('click', () => {
         triggerHaptic(10);
         celebrationModal.classList.remove('show');
@@ -372,7 +464,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     sendWhatsAppReplyBtn.addEventListener('click', () => {
         triggerHaptic(15);
-        const replyText = encodeURIComponent("Hey! I saw your sorry card and of course I forgive you! Our friendship is special forever! 🐼❤️");
+        const replyText = encodeURIComponent("Hey! I saw your sorry card and of course I forgive you! Our friendship will always stay special forever! 🐼❤️");
         window.open(`https://api.whatsapp.com/send?text=${replyText}`, '_blank');
     });
 
@@ -397,8 +489,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Close modals on outside click
-    [celebrationModal, certificateModal, letterModal].forEach(modal => {
+    // Close modals on outside backdrop click
+    [celebrationModal, certificateModal, letterModal, zoomModal].forEach(modal => {
+        if (!modal) return;
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.classList.remove('show');

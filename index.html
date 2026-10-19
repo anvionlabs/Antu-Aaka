@@ -71,287 +71,238 @@
          ========================================================================== -->
     <main class="main-wrapper">
         
-        <!-- Story Progress Bar (Visible in Story Carousel Mode) -->
+        <!-- Story Progress Bar & Page Selector (Visible in Individual Page Mode) -->
         <div class="story-header" id="storyHeader">
             <div class="story-progress-bar">
-                <div class="progress-segment active" data-index="0"><div class="fill"></div></div>
-                <div class="progress-segment" data-index="1"><div class="fill"></div></div>
-                <div class="progress-segment" data-index="2"><div class="fill"></div></div>
-                <div class="progress-segment" data-index="3"><div class="fill"></div></div>
-                <div class="progress-segment" data-index="4"><div class="fill"></div></div>
+                <div class="progress-segment active" data-index="0" title="Page 1: Apology"><div class="fill"></div></div>
+                <div class="progress-segment" data-index="1" title="Page 2: Mistakes"><div class="fill"></div></div>
+                <div class="progress-segment" data-index="2" title="Page 3: Promises"><div class="fill"></div></div>
+                <div class="progress-segment" data-index="3" title="Page 4: Gratitude"><div class="fill"></div></div>
+                <div class="progress-segment" data-index="4" title="Page 5: Forgive"><div class="fill"></div></div>
             </div>
             <div class="story-meta-bar">
-                <span>Swipe or tap arrows to navigate</span>
+                <span id="pageNavHint">Swipe or tap arrows to navigate</span>
                 <span class="story-counter" id="storyCounterText">1 / 5</span>
             </div>
+
+            <!-- Quick Jump Page Selector (Individual Pages 1 to 5) -->
+            <nav class="page-quick-nav" id="pageQuickNav" aria-label="Individual page selector">
+                <button class="page-nav-pill active" data-page="0">
+                    <span class="pill-num">1</span>
+                    <span class="pill-label">Apology</span>
+                </button>
+                <button class="page-nav-pill" data-page="1">
+                    <span class="pill-num">2</span>
+                    <span class="pill-label">Mistakes</span>
+                </button>
+                <button class="page-nav-pill" data-page="2">
+                    <span class="pill-num">3</span>
+                    <span class="pill-label">Promises</span>
+                </button>
+                <button class="page-nav-pill" data-page="3">
+                    <span class="pill-num">4</span>
+                    <span class="pill-label">Gratitude</span>
+                </button>
+                <button class="page-nav-pill" data-page="4">
+                    <span class="pill-num">5</span>
+                    <span class="pill-label">Forgive</span>
+                </button>
+            </nav>
         </div>
 
-        <!-- STORY CAROUSEL VIEW -->
+        <!-- INDIVIDUAL STORY PAGES CAROUSEL VIEW -->
         <div class="carousel-view" id="carouselView">
             
             <!-- Stage wrapper with mid-card floating sliding arrows -->
             <div class="carousel-stage-wrapper">
                 <!-- Middle Left Arrow for Sliding -->
-                <button class="nav-arrow-btn arrow-prev" id="prevCardBtn" title="Previous Card" aria-label="Previous Card" disabled>
+                <button class="nav-arrow-btn arrow-prev" id="prevCardBtn" title="Previous Page" aria-label="Previous Page" disabled>
                     <span>‹</span>
                 </button>
 
                 <div class="carousel-stage">
 
-                <!-- ================= CARD 1 / 5 ================= -->
-                <article class="card-item card-1 active" data-card="1">
-                    <div class="card-top-accent"></div>
-                    <span class="card-float-heart" style="top: 15px; left: 15px;">💖</span>
-                    <span class="card-float-heart" style="top: 40px; right: 20px;">🌸</span>
+                    <!-- ================= INDIVIDUAL PAGE 1 / 5: APOLOGY CARD ================= -->
+                    <article class="card-item card-page-item card-1 active" data-card="1">
+                        <div class="card-page-badge">
+                            <span class="badge-icon">🌸</span>
+                            <span class="badge-text">Page 1 of 5 • To My Best Friend Antasmita Roy</span>
+                        </div>
 
-                    <div class="card-1-header">
-                        <p class="script-sub">To My Best Friend</p>
-                        <h2 class="recipient-name">Antasmita Roy</h2>
-                        <p class="recipient-nickname">(Antu Aaka)</p>
-                        
-                        <div class="heart-badge-wrap">
-                            <div class="heart-badge">
-                                <span>💌</span>
-                                <span>A very special Sorry Card for you</span>
+                        <div class="card-art-stage" id="bouquetWrap" title="Tap flowers to shower petals!">
+                            <img src="assets/card_page_1_hd.png" alt="To My Best Friend Antasmita Roy (Antu Aaka) - A very special Sorry Card for you" class="card-page-art">
+                            <button class="art-interactive-hint" aria-label="Tap for rose petals">
+                                <span>🌸 Tap flowers for magic!</span>
+                            </button>
+                        </div>
+
+                        <div class="card-bottom-actions">
+                            <button class="btn-card-action petal-shower-btn" id="btnShowerPetals1">
+                                <span>🌹 Shower Rose Petals</span>
+                            </button>
+                            <button class="btn-card-action zoom-trigger-btn" data-img="assets/card_page_1_hd.png" data-title="Page 1: To My Best Friend Antasmita Roy (Antu Aaka)">
+                                <span>🔍 Zoom & Save</span>
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- ================= INDIVIDUAL PAGE 2 / 5: MISTAKES & REFLECTIONS ================= -->
+                    <article class="card-item card-page-item card-2" data-card="2">
+                        <div class="card-page-badge">
+                            <span class="badge-icon">🥺</span>
+                            <span class="badge-text">Page 2 of 5 • I Know I Made Mistakes...</span>
+                        </div>
+
+                        <div class="card-art-stage" id="cardArt2" title="Tap any note to send love ❤️">
+                            <img src="assets/card_page_2_hd.png" alt="I know I made mistakes... And I feel really bad for them ❤️" class="card-page-art">
+                            
+                            <!-- Interactive Hotspots over the Sticky Notes -->
+                            <div class="card-hotspot" style="top: 14%; height: 26%;" data-msg="I'm truly sorry, Antu Aaka 🥺❤️" title="Sad baby panda"></div>
+                            <div class="card-hotspot note-hotspot" style="top: 45%; height: 9.7%;" data-msg="I promise to always make time for you ⏰❤️" title="Maybe I didn't give you enough time..."></div>
+                            <div class="card-hotspot note-hotspot" style="top: 55.2%; height: 9.3%;" data-msg="I'm so sorry if my words hurt you 💬❤️" title="Maybe I said something wrong..."></div>
+                            <div class="card-hotspot note-hotspot" style="top: 64.8%; height: 10.2%;" data-msg="I will listen and understand you better 💭❤️" title="Maybe I didn't understand you properly..."></div>
+                            <div class="card-hotspot note-hotspot" style="top: 75.7%; height: 9.8%;" data-msg="I never want to see you upset ☹️❤️" title="Maybe I made you feel upset..."></div>
+                        </div>
+
+                        <div class="card-bottom-actions">
+                            <div class="reflection-quote-pill">
+                                <span>"I never meant to hurt you... You're too special to me ❤️"</span>
                             </div>
+                            <button class="btn-card-action zoom-trigger-btn" data-img="assets/card_page_2_hd.png" data-title="Page 2: I know I made mistakes...">
+                                <span>🔍 Zoom & Save</span>
+                            </button>
                         </div>
-                    </div>
+                    </article>
 
-                    <!-- Panda Bouquet Illustration (Both Boy & Girl Pandas Clearly Visible) -->
-                    <div class="panda-illustration-wrap" id="bouquetWrap" title="Tap bouquet to shower rose petals!">
-                        <img src="assets/panda_1_flowers_hd.png" alt="Panda offering flowers to best friend" class="panda-img">
-                    </div>
-
-                    <!-- Heartfelt Text Box -->
-                    <div class="card-message-box">
-                        <p>For my mistakes,</p>
-                        <p>for the misunderstandings,</p>
-                        <p>and for anything that hurt you...</p>
-                        <p><strong>I'm truly sorry ❤️</strong></p>
-                    </div>
-
-                    <div class="card-counter-pill">1/5</div>
-                </article>
-
-                <!-- ================= CARD 2 / 5 ================= -->
-                <article class="card-item card-2" data-card="2">
-                    <div class="card-top-accent"></div>
-                    <span class="card-float-heart" style="top: 15px; left: 15px;">🥺</span>
-                    <span class="card-float-heart" style="top: 30px; right: 20px;">💔</span>
-
-                    <div class="card-2-header">
-                        <h2 class="card-title-medium">
-                            I know I made mistakes...<br>
-                            And I feel really bad for them ❤️
-                        </h2>
-                    </div>
-
-                    <!-- Sad Panda Illustration -->
-                    <div class="panda-illustration-wrap">
-                        <img src="assets/panda_2_sorry_sign_hd.png" alt="Sad panda holding I'm Sorry sign" class="panda-img">
-                    </div>
-
-                    <!-- Reflection Sticky Notes -->
-                    <div class="notes-list">
-                        <div class="sticky-note-item" title="Click to show love">
-                            <span class="note-icon">⏰</span>
-                            <span>Maybe I didn't give you enough time sometimes...</span>
-                        </div>
-                        <div class="sticky-note-item" title="Click to show love">
-                            <span class="note-icon">💬</span>
-                            <span>Maybe I said something wrong...</span>
-                        </div>
-                        <div class="sticky-note-item" title="Click to show love">
-                            <span class="note-icon">💭</span>
-                            <span>Maybe I didn't understand you properly...</span>
-                        </div>
-                        <div class="sticky-note-item" title="Click to show love">
-                            <span class="note-icon">☹️</span>
-                            <span>Maybe I made you feel upset...</span>
-                        </div>
-                    </div>
-
-                    <div class="card-message-box">
-                        <p>I never meant to hurt you...</p>
-                        <p><strong>You're too special to me ❤️</strong></p>
-                    </div>
-
-                    <div class="card-counter-pill">2/5</div>
-                </article>
-
-                <!-- ================= CARD 3 / 5 ================= -->
-                <article class="card-item card-3" data-card="3">
-                    <div class="card-top-accent"></div>
-                    <span class="card-float-heart" style="top: 15px; left: 15px;">✨</span>
-                    <span class="card-float-heart" style="top: 35px; right: 20px;">💖</span>
-
-                    <div class="card-3-header">
-                        <h2 class="card-title-large">Please Forgive Me ❤️</h2>
-                    </div>
-
-                    <!-- Hugging Panda Illustration -->
-                    <div class="panda-illustration-wrap">
-                        <img src="assets/panda_3_hug_hd.png" alt="Cute panda hugging baby panda" class="panda-img">
-                    </div>
-
-                    <!-- Notepad Checklist "I Promise..." -->
-                    <div class="notepad-container">
-                        <div class="notepad-title">
-                            <span>I Promise... 📝</span>
-                            <span class="promise-counter-badge" id="promiseBadge">6/6 Sealed</span>
+                    <!-- ================= INDIVIDUAL PAGE 3 / 5: PROMISES ================= -->
+                    <article class="card-item card-page-item card-3" data-card="3">
+                        <div class="card-page-badge">
+                            <span class="badge-icon">📝</span>
+                            <span class="badge-text">Page 3 of 5 • Please Forgive Me • I Promise...</span>
                         </div>
 
-                        <div class="promise-list" id="promiseList">
-                            <div class="promise-item checked" data-idx="1">
-                                <div class="promise-checkbox">✓</div>
-                                <span>I will be more mindful</span>
+                        <div class="card-art-stage" id="cardArt3" title="Tap notepad to seal promises! 💖">
+                            <img src="assets/card_page_3_hd.png" alt="Please Forgive Me - I Promise..." class="card-page-art">
+                            
+                            <!-- Interactive Hotspots over the 6 promise lines -->
+                            <div class="card-hotspot promise-hotspot" style="top: 55.5%; height: 5.2%;" data-promise="1" title="I will be more mindful"></div>
+                            <div class="card-hotspot promise-hotspot" style="top: 60.7%; height: 5.6%;" data-promise="2" title="I will listen better"></div>
+                            <div class="card-hotspot promise-hotspot" style="top: 66.3%; height: 5.4%;" data-promise="3" title="I will always respect you"></div>
+                            <div class="card-hotspot promise-hotspot" style="top: 71.7%; height: 5.5%;" data-promise="4" title="I will be there for you"></div>
+                            <div class="card-hotspot promise-hotspot" style="top: 77.2%; height: 5.6%;" data-promise="5" title="I will not repeat those mistakes"></div>
+                            <div class="card-hotspot promise-hotspot" style="top: 82.8%; height: 5.7%;" data-promise="6" title="I will value our friendship forever"></div>
+                        </div>
+
+                        <div class="card-bottom-actions">
+                            <button class="btn-card-action promise-seal-btn" id="sealPromisesBtn">
+                                <span>✨ All 6 Promises Sealed</span>
+                                <span class="seal-badge" id="promiseBadge">6/6 Sealed</span>
+                            </button>
+                            <button class="btn-card-action zoom-trigger-btn" data-img="assets/card_page_3_hd.png" data-title="Page 3: Please Forgive Me - I Promise...">
+                                <span>🔍 Zoom & Save</span>
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- ================= INDIVIDUAL PAGE 4 / 5: GRATITUDE ================= -->
+                    <article class="card-item card-page-item card-4" data-card="4">
+                        <div class="card-page-badge">
+                            <span class="badge-icon">🌟</span>
+                            <span class="badge-text">Page 4 of 5 • Thank You For Being You</span>
+                        </div>
+
+                        <div class="card-art-stage" id="cardArt4" title="Tap to shower love stars! ⭐">
+                            <img src="assets/card_page_4_hd.png" alt="Thank You for always being there for me ❤️" class="card-page-art">
+                            
+                            <!-- Interactive Hotspots over Gratitude Pills -->
+                            <div class="card-hotspot gratitude-hotspot" style="top: 49.2%; height: 7.8%;" data-msg="You always support me! 💖"></div>
+                            <div class="card-hotspot gratitude-hotspot" style="top: 57.7%; height: 7.5%;" data-msg="You always believe in me! ⭐"></div>
+                            <div class="card-hotspot gratitude-hotspot" style="top: 66%; height: 7.5%;" data-msg="You always listen to me! 😊"></div>
+                            <div class="card-hotspot gratitude-hotspot" style="top: 74.2%; height: 7.5%;" data-msg="You make my days brighter! 🌸"></div>
+                        </div>
+
+                        <div class="card-bottom-actions">
+                            <div class="reflection-quote-pill">
+                                <span>"You are an amazing friend & I'm so lucky to have you ❤️"</span>
                             </div>
-                            <div class="promise-item checked" data-idx="2">
-                                <div class="promise-checkbox">✓</div>
-                                <span>I will listen better</span>
-                            </div>
-                            <div class="promise-item checked" data-idx="3">
-                                <div class="promise-checkbox">✓</div>
-                                <span>I will always respect you</span>
-                            </div>
-                            <div class="promise-item checked" data-idx="4">
-                                <div class="promise-checkbox">✓</div>
-                                <span>I will be there for you</span>
-                            </div>
-                            <div class="promise-item checked" data-idx="5">
-                                <div class="promise-checkbox">✓</div>
-                                <span>I will not repeat those mistakes</span>
-                            </div>
-                            <div class="promise-item checked" data-idx="6">
-                                <div class="promise-checkbox">✓</div>
-                                <span>I will value our friendship forever</span>
-                            </div>
+                            <button class="btn-card-action zoom-trigger-btn" data-img="assets/card_page_4_hd.png" data-title="Page 4: Thank You For Always Being There">
+                                <span>🔍 Zoom & Save</span>
+                            </button>
                         </div>
-                    </div>
+                    </article>
 
-                    <div class="bottom-pill-badge">
-                        Because our friendship means everything to me ❤️
-                    </div>
-
-                    <div class="card-counter-pill">3/5</div>
-                </article>
-
-                <!-- ================= CARD 4 / 5 ================= -->
-                <article class="card-item card-4" data-card="4">
-                    <div class="card-top-accent"></div>
-                    <span class="card-float-heart" style="top: 15px; left: 15px;">🌟</span>
-                    <span class="card-float-heart" style="top: 35px; right: 20px;">🌸</span>
-
-                    <div class="card-4-header">
-                        <h2 class="card-title-medium" style="font-size: 1.7rem; color: var(--primary-deep);">
-                            Thank You<br>
-                            <span style="font-size: 1.25rem; color: var(--text-dark);">for always being there for me ❤️</span>
-                        </h2>
-                    </div>
-
-                    <!-- Stacked Cuddling Pandas Illustration -->
-                    <div class="panda-illustration-wrap">
-                        <img src="assets/panda_4_cuddle_hd.png" alt="Panda cuddles with bow" class="panda-img">
-                    </div>
-
-                    <!-- Gratitude Pills -->
-                    <div class="gratitude-list">
-                        <div class="gratitude-pill">
-                            <div class="gratitude-icon-wrap icon-pink">💖</div>
-                            <span>You always support me...</span>
+                    <!-- ================= INDIVIDUAL PAGE 5 / 5: WILL YOU FORGIVE ME? ================= -->
+                    <article class="card-item card-page-item card-5" data-card="5">
+                        <div class="card-page-badge">
+                            <span class="badge-icon">🎀</span>
+                            <span class="badge-text">Page 5 of 5 • Will You Forgive Me?</span>
                         </div>
-                        <div class="gratitude-pill">
-                            <div class="gratitude-icon-wrap icon-yellow">⭐</div>
-                            <span>You always believe in me...</span>
+
+                        <div class="card-art-stage" id="cardArt5">
+                            <img src="assets/card_page_5_hd.png" alt="Will You Forgive Me? - Yes, I Forgive You Antu Aaka ❤️" class="card-page-art">
+                            
+                            <!-- Hotspots directly over the illustration's green and pink buttons -->
+                            <button class="art-hotspot-btn hotspot-green-forgive" id="artHotspotForgive" title="Tap: Yes, I Forgive You Antu Aaka" aria-label="Yes, I Forgive You Antu Aaka">
+                                <span class="hotspot-pulse"></span>
+                            </button>
+                            <button class="art-hotspot-btn hotspot-pink-always" id="artHotspotAlways" title="Tap: Always Your Friend" aria-label="Always Your Friend">
+                                <span class="hotspot-pulse"></span>
+                            </button>
                         </div>
-                        <div class="gratitude-pill">
-                            <div class="gratitude-icon-wrap icon-blue">😊</div>
-                            <span>You always listen to me...</span>
+
+                        <!-- Prominent Interactive Decision Buttons -->
+                        <div class="forgiveness-actions">
+                            <button class="btn-decision btn-yes-forgive" id="btnYesForgive">
+                                <span class="btn-icon">✔</span>
+                                <span>Yes, I Forgive You Antu Aaka ❤️</span>
+                            </button>
+                            
+                            <button class="btn-decision btn-always-friend" id="btnAlwaysFriend">
+                                <span class="btn-icon">❤️</span>
+                                <span>Always Your Friend</span>
+                            </button>
+
+                            <button class="btn-playful-no" id="btnPlayfulNo">
+                                <span>Still Thinking... 🙈</span>
+                            </button>
                         </div>
-                        <div class="gratitude-pill">
-                            <div class="gratitude-icon-wrap icon-flower">🌸</div>
-                            <span>You make my days brighter...</span>
+
+                        <div class="card-bottom-actions" style="margin-top: 6px;">
+                            <button class="btn-card-action zoom-trigger-btn" data-img="assets/card_page_5_hd.png" data-title="Page 5: Will You Forgive Me?">
+                                <span>🔍 Zoom & Save</span>
+                            </button>
                         </div>
-                    </div>
+                    </article>
 
-                    <div class="card-message-box" style="background: rgba(255, 255, 255, 0.9);">
-                        <p>You are an amazing friend and</p>
-                        <p><strong>I'm so lucky to have you ❤️</strong></p>
-                    </div>
+                </div><!-- /.carousel-stage -->
 
-                    <div class="card-counter-pill">4/5</div>
-                </article>
+                <!-- Middle Right Arrow for Sliding -->
+                <button class="nav-arrow-btn arrow-next" id="nextCardBtn" title="Next Page" aria-label="Next Page">
+                    <span>›</span>
+                </button>
 
-                <!-- ================= CARD 5 / 5 ================= -->
-                <article class="card-item card-5" data-card="5">
-                    <div class="card-top-accent"></div>
-                    <span class="card-float-heart" style="top: 15px; left: 15px;">🎀</span>
-                    <span class="card-float-heart" style="top: 30px; right: 20px;">💖</span>
+            </div><!-- /.carousel-stage-wrapper -->
 
-                    <div class="card-5-header">
-                        <h2 class="card-title-large">Will You Forgive Me?</h2>
-                    </div>
-
-                    <!-- Pandas with Heart Cushions -->
-                    <div class="panda-illustration-wrap">
-                        <img src="assets/panda_5_hearts_hd.png" alt="Pandas with SORRY and FRIENDS FOREVER hearts" class="panda-img">
-                    </div>
-
-                    <!-- Interactive Decision Buttons -->
-                    <div class="forgiveness-actions">
-                        <button class="btn-decision btn-yes-forgive" id="btnYesForgive">
-                            <span>✔</span>
-                            <span>Yes, I Forgive You Antu Aaka ❤️</span>
-                        </button>
-                        
-                        <button class="btn-decision btn-always-friend" id="btnAlwaysFriend">
-                            <span>❤️</span>
-                            <span>Always Your Friend</span>
-                        </button>
-
-                        <button class="btn-playful-no" id="btnPlayfulNo">
-                            <span>Still Thinking... 🙈</span>
-                        </button>
-                    </div>
-
-                    <!-- Sunset bench scene -->
-                    <div class="sunset-scene-wrap">
-                        <img src="assets/panda_5_sunset_hd.png" alt="Pandas watching sunset on wooden bench" class="sunset-img">
-                    </div>
-
-                    <div class="card-message-box" style="margin-top: 6px; padding: 8px 12px; font-size: 0.88rem;">
-                        <p>No matter what...</p>
-                        <p><strong>Our friendship will always stay Special ❤️</strong></p>
-                    </div>
-
-                    <div class="card-counter-pill">5/5</div>
-                </article>
-
-            </div><!-- /.carousel-stage -->
-
-            <!-- Middle Right Arrow for Sliding -->
-            <button class="nav-arrow-btn arrow-next" id="nextCardBtn" title="Next Card" aria-label="Next Card">
-                <span>›</span>
-            </button>
-
-        </div><!-- /.carousel-stage-wrapper -->
-
-        <!-- Bottom Action Pill & Hint -->
-        <div class="carousel-bottom-bar">
-            <button class="action-pill-btn" id="shareCardBtn">
-                <span>💌</span>
-                <span>Share With Antu</span>
-            </button>
-            <div class="slide-hint-text">
-                <span>👈 Swipe or tap arrows to slide 👉</span>
+            <!-- Bottom Action Pill & Hint -->
+            <div class="carousel-bottom-bar">
+                <button class="action-pill-btn" id="shareCardBtn">
+                    <span>💌</span>
+                    <span>Share With Antu</span>
+                </button>
+                <div class="slide-hint-text">
+                    <span>👈 Swipe or tap arrows to view each individual page 👉</span>
+                </div>
             </div>
         </div>
-    </div>
 
         <!-- PANORAMIC ALL 5 CARDS VIEW (Side by side bookmark set) -->
         <div class="panoramic-view" id="panoramicView">
+            <div class="panoramic-header-banner">
+                <h3>The Complete 5-Bookmark Set for Antu Aaka 🐼❤️</h3>
+                <p>Scroll horizontally to view all cards together, or tap any card to jump to its individual page</p>
+            </div>
             <div class="panoramic-container" id="panoramicContainer">
-                <!-- Cloned content of cards 1-5 will be mirrored or displayed in panoramic layout -->
+                <!-- All 5 cards rendered in panoramic gallery -->
             </div>
         </div>
 
@@ -432,6 +383,26 @@
             </button>
         </div>
     </div>
+
+    <!-- ==========================================================================
+         MODAL 4: ZOOM & DOWNLOAD CARD MODAL
+         ========================================================================== -->
+    <div class="modal-backdrop" id="zoomModal">
+        <div class="modal-card zoom-modal-card">
+            <button class="modal-close-btn" id="closeZoomBtn">✕</button>
+            <h3 class="celebration-title zoom-title" id="zoomModalTitle">Card Preview</h3>
+            <div class="zoom-img-wrapper">
+                <img src="" alt="Zoomed card" class="zoom-preview-img" id="zoomPreviewImg">
+            </div>
+            <div class="zoom-modal-actions">
+                <a href="" download="Antu_Aaka_Card.png" id="downloadCardBtn" class="btn-decision btn-yes-forgive" style="text-decoration: none;">
+                    <span>⬇️</span>
+                    <span>Download This Card</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Toast Notice -->
     <div class="toast-notice" id="toastNotice">
