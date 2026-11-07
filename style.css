@@ -510,118 +510,769 @@ body {
     box-shadow: 0 2px 8px rgba(255, 107, 139, 0.12);
 }
 
-/* Card Art Stage (The Bookmark Display) */
-.card-art-stage {
+/* ==========================================================================
+   ANIMATED MOBILE-FRIENDLY CARD ARCHITECTURE (No Static Image Cards)
+   ========================================================================== */
+
+/* Hero Character Stage */
+.card-animated-stage {
     position: relative;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     width: 100%;
-    margin: 0 auto;
+    padding: clamp(6px, 1.2vh, 12px) 0;
+    margin-bottom: clamp(6px, 1vh, 10px);
     cursor: pointer;
+    user-select: none;
 }
 
-.card-page-art {
+/* Pulsing Ambient Auras Behind Character */
+.panda-aura-glow {
+    position: absolute;
+    width: clamp(130px, 36vw, 175px);
+    height: clamp(130px, 36vw, 175px);
+    border-radius: 50%;
+    filter: blur(24px);
+    opacity: 0.72;
+    z-index: 1;
+    animation: auraPuff 3.5s infinite ease-in-out;
+    pointer-events: none;
+}
+
+.glow-rose { background: radial-gradient(circle, #FFAAC0 0%, rgba(255, 182, 193, 0) 72%); }
+.glow-warm { background: radial-gradient(circle, #FFE49E 0%, rgba(255, 228, 158, 0) 72%); }
+.glow-pink { background: radial-gradient(circle, #FF9EBB 0%, rgba(255, 182, 200, 0) 72%); }
+.glow-gold { background: radial-gradient(circle, #FFD166 0%, rgba(255, 209, 102, 0) 72%); }
+.glow-pink-deep { background: radial-gradient(circle, #FF6B8B 0%, rgba(255, 107, 139, 0) 72%); }
+
+@keyframes auraPuff {
+    0%, 100% { transform: scale(0.92); opacity: 0.58; }
+    50% { transform: scale(1.15); opacity: 0.88; }
+}
+
+/* Floating Little Emojis in Hero Layer */
+.floating-petals-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+    overflow: hidden;
+}
+
+.float-emoji {
+    position: absolute;
+    font-size: clamp(0.95rem, 2.8vw, 1.2rem);
+    animation: floatEmojiDrift 4s infinite ease-in-out;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
+}
+
+.float-emoji.p1 { top: 8%; left: 10%; animation-delay: 0s; }
+.float-emoji.p2 { top: 10%; right: 12%; animation-delay: 1.2s; }
+.float-emoji.p3 { bottom: 16%; left: 12%; animation-delay: 2.2s; }
+.float-emoji.p4 { bottom: 14%; right: 12%; animation-delay: 3.1s; }
+
+@keyframes floatEmojiDrift {
+    0%, 100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.75; }
+    50% { transform: translateY(-10px) scale(1.18) rotate(14deg); opacity: 1; }
+}
+
+/* Live Animated Panda GIFs */
+.panda-live-gif {
     display: block;
-    height: clamp(470px, 64vh, 590px);
     width: auto;
-    max-width: 95%;
+    max-width: 86%;
+    height: clamp(140px, 22vh, 185px);
     object-fit: contain;
-    border-radius: 20px;
-    box-shadow: 0 10px 28px rgba(186, 73, 98, 0.18), 0 3px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 18px;
+    z-index: 2;
+    position: relative;
+    box-shadow: 0 10px 28px rgba(255, 107, 139, 0.22);
     border: 3px solid rgba(255, 255, 255, 0.95);
+    background: #FFF;
     transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     user-select: none;
     -webkit-user-drag: none;
 }
 
-.card-art-stage:active .card-page-art {
-    transform: scale(0.985);
+.panda-live-gif:active {
+    transform: scale(0.93) !important;
+}
+
+/* Expressive Action Badge above/below GIF */
+.gif-action-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1.5px solid var(--primary-pink);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: clamp(0.7rem, 2.1vw, 0.78rem);
+    font-weight: 700;
+    color: var(--primary-deep);
+    margin-top: 8px;
+    box-shadow: 0 3px 10px rgba(255, 107, 139, 0.16);
+    animation: gentlePulse 2.4s infinite ease-in-out;
+    z-index: 3;
+    text-align: center;
+    max-width: 95%;
+}
+
+/* Saza & Pyar Express Menu on Card 5 */
+.saza-pyaar-express-box {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.94);
+    border-radius: 16px;
+    padding: 10px 12px;
+    border: 1.5px solid rgba(255, 107, 139, 0.3);
+    box-shadow: 0 4px 14px rgba(255, 107, 139, 0.1);
+    margin: 6px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.saza-header {
+    font-size: clamp(0.72rem, 2.1vw, 0.8rem);
+    font-weight: 700;
+    color: var(--primary-deep);
+    text-align: center;
+}
+
+.saza-buttons-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+}
+
+.saza-btn {
+    background: #FFF0F4;
+    border: 1px solid #FFCCD5;
+    border-radius: 16px;
+    padding: 5px 10px;
+    font-size: clamp(0.68rem, 2vw, 0.76rem);
+    font-weight: 700;
+    color: #4A3337;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.saza-btn:hover, .saza-btn:active {
+    background: var(--primary-deep);
+    color: #fff;
+    border-color: var(--primary-deep);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 4px 10px rgba(255, 75, 114, 0.3);
+}
+
+/* Panda Hero Animations */
+.panda-animated-hero {
+    display: block;
+    width: auto;
+    max-width: 88%;
+    height: clamp(140px, 21vh, 185px);
+    object-fit: contain;
+    z-index: 2;
+    position: relative;
+    filter: drop-shadow(0 8px 18px rgba(255, 107, 139, 0.22));
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.panda-animated-hero:active {
+    transform: scale(0.92) !important;
+}
+
+@keyframes pandaBounce {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(1.5deg); }
+}
+.panda-bounce {
+    animation: pandaBounce 3s infinite ease-in-out;
+}
+
+@keyframes pandaSadBreathe {
+    0%, 100% { transform: scale(1) translateY(0); }
+    50% { transform: scale(0.96) translateY(3px); }
+}
+.panda-sad-breathe {
+    animation: pandaSadBreathe 2.8s infinite ease-in-out;
+}
+
+@keyframes pandaHugSway {
+    0%, 100% { transform: rotate(-2deg) scale(1); }
+    50% { transform: rotate(2deg) scale(1.02); }
+}
+.panda-hug-sway {
+    animation: pandaHugSway 3.2s infinite ease-in-out;
+}
+
+@keyframes pandaCuddleBob {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-6px) scale(1.03); }
+}
+.panda-cuddle-bob {
+    animation: pandaCuddleBob 2.9s infinite ease-in-out;
+}
+
+@keyframes pandaHeartBeat {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.04); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.06); }
+}
+.panda-heart-beat {
+    animation: pandaHeartBeat 2.4s infinite ease-in-out;
 }
 
 /* Interactive Hint floating on art */
 .art-interactive-hint {
-    position: absolute;
-    bottom: 12px;
+    margin-top: 6px;
     background: rgba(255, 255, 255, 0.95);
     border: 1px solid rgba(255, 107, 139, 0.4);
     border-radius: 20px;
-    padding: 4px 10px;
-    font-size: 0.72rem;
+    padding: 3px 12px;
+    font-size: clamp(0.68rem, 2vw, 0.74rem);
     font-weight: 600;
     color: var(--primary-deep);
     pointer-events: none;
-    box-shadow: 0 2px 8px rgba(255, 107, 139, 0.2);
+    box-shadow: 0 2px 8px rgba(255, 107, 139, 0.15);
     animation: gentlePulse 2s infinite ease-in-out;
+    z-index: 3;
 }
 
-/* Interactive Hotspots */
-.card-hotspot {
-    position: absolute;
-    left: 8%;
-    width: 84%;
-    cursor: pointer;
+/* Card Text Content Area */
+.card-text-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: clamp(8px, 1.4vh, 12px);
+    position: relative;
+    z-index: 2;
+}
+
+.card-recipient-title {
+    font-family: 'Fredoka', cursive, sans-serif;
+    font-size: clamp(1.2rem, 3.8vw, 1.45rem);
+    font-weight: 700;
+    color: var(--primary-deep);
+    line-height: 1.2;
+}
+.card-recipient-title span {
+    font-size: 0.88em;
+    color: #D81E5B;
+    font-weight: 600;
+}
+
+.card-section-title {
+    font-family: 'Fredoka', cursive, sans-serif;
+    font-size: clamp(1.15rem, 3.6vw, 1.4rem);
+    font-weight: 700;
+    color: var(--primary-deep);
+    line-height: 1.25;
+}
+
+.card-intro-quote {
+    font-size: clamp(0.78rem, 2.3vw, 0.86rem);
+    line-height: 1.45;
+    color: var(--text-muted);
+    font-style: italic;
+    max-width: 95%;
+    margin: 0 auto;
+}
+
+/* ==========================================================================
+   CARD 1: THE CORE EMOTIONAL PROMISE BOX (Requested by User)
+   ========================================================================== */
+.emotional-core-box {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 18px;
+    padding: clamp(12px, 2vh, 16px) clamp(10px, 2.5vw, 14px);
+    border: 1.5px solid rgba(255, 107, 139, 0.35);
+    box-shadow: 0 4px 18px rgba(255, 107, 139, 0.12);
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    animation: borderShimmer 4s infinite linear;
+}
+
+@keyframes borderShimmer {
+    0%, 100% { border-color: rgba(255, 107, 139, 0.4); box-shadow: 0 4px 18px rgba(255, 107, 139, 0.12); }
+    50% { border-color: rgba(255, 75, 114, 0.75); box-shadow: 0 6px 22px rgba(255, 75, 114, 0.22); }
+}
+
+.core-box-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: clamp(0.7rem, 2vw, 0.76rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--primary-deep);
+    margin-bottom: 8px;
+    border-bottom: 1px dashed rgba(255, 182, 193, 0.6);
+    padding-bottom: 5px;
+}
+
+.emotional-lead-text {
+    font-size: clamp(0.86rem, 2.6vw, 0.96rem);
+    font-weight: 700;
+    color: var(--primary-deep);
+    line-height: 1.4;
+    margin-bottom: 8px;
+}
+
+.emotional-body-text {
+    font-size: clamp(0.8rem, 2.4vw, 0.9rem);
+    line-height: 1.5;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+}
+
+.emotional-reassurance-text {
+    font-size: clamp(0.78rem, 2.3vw, 0.88rem);
+    line-height: 1.45;
+    color: #5C3D45;
+    background: #FFF5F8;
     border-radius: 12px;
-    transition: background 0.2s, transform 0.15s;
-    z-index: 5;
+    padding: 8px 10px;
+    border-left: 3.5px solid var(--primary-pink);
 }
 
-.card-hotspot:hover {
-    background: rgba(255, 255, 255, 0.25);
+.card-tender-subtext {
+    font-size: clamp(0.74rem, 2.2vw, 0.82rem);
+    line-height: 1.4;
+    color: var(--text-muted);
 }
 
-.card-hotspot:active {
-    background: rgba(255, 107, 139, 0.2);
+/* ==========================================================================
+   CARD 2: REFLECTION STICKY NOTES
+   ========================================================================== */
+.reflection-notes-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    width: 100%;
+}
+
+.note-hotspot-item {
+    position: relative;
+    width: 100%;
+    background: #FFFDF4;
+    border: 1.5px solid #FFE7A0;
+    border-radius: 14px;
+    padding: 9px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    cursor: pointer;
+    text-align: left;
+    box-shadow: 0 3px 10px rgba(220, 180, 80, 0.12);
+    transition: all 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.note-hotspot-item:nth-child(even) {
+    background: #FFF6F8;
+    border-color: #FFCCD5;
+    box-shadow: 0 3px 10px rgba(255, 107, 139, 0.1);
+}
+
+.note-hotspot-item:hover, .note-hotspot-item:active {
+    transform: translateY(-2px) scale(1.01);
+    border-color: var(--primary-pink);
+    background: #FFF;
+    box-shadow: 0 6px 16px rgba(255, 107, 139, 0.2);
+}
+
+.note-pin {
+    font-size: 0.95rem;
+    flex-shrink: 0;
+}
+
+.note-txt {
+    font-size: clamp(0.76rem, 2.3vw, 0.85rem);
+    font-weight: 600;
+    color: var(--text-dark);
+    flex: 1;
+    line-height: 1.35;
+}
+
+.note-tap-indicator {
+    font-size: 0.65rem;
+    background: #FFE0E6;
+    color: var(--primary-deep);
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-weight: 700;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* ==========================================================================
+   CARD 3: SACRED PROMISES LIST
+   ========================================================================== */
+.promises-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+}
+
+.promise-card-item {
+    position: relative;
+    width: 100%;
+    background: #FFF;
+    border: 1.5px solid #FFCCD8;
+    border-radius: 14px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    text-align: left;
+    box-shadow: 0 2px 8px rgba(255, 107, 139, 0.08);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.promise-card-item.sealed {
+    border-color: #4EBA87;
+    background: #F7FFF9;
+}
+
+.promise-card-item:active {
     transform: scale(0.98);
 }
 
-/* Hotspots directly on Card 5 Buttons */
-.art-hotspot-btn {
-    position: absolute;
-    left: 8%;
-    width: 84%;
-    height: 7.5%;
-    border: none;
-    border-radius: 24px;
-    background: transparent;
+.promise-check {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #E8F8EE;
+    color: #2EAF6E;
+    font-size: 0.75rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1.5px solid #4EBA87;
+    transition: all 0.2s;
+}
+
+.promise-card-item.sealed .promise-check {
+    background: #2EAF6E;
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(46, 175, 110, 0.3);
+}
+
+.promise-text {
+    font-size: clamp(0.74rem, 2.2vw, 0.84rem);
+    font-weight: 600;
+    color: var(--text-dark);
+    line-height: 1.35;
+    flex: 1;
+}
+
+/* ==========================================================================
+   CARD 4: GRATITUDE GRID
+   ========================================================================== */
+.gratitude-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 7px;
+    width: 100%;
+}
+
+.gratitude-card-item {
+    position: relative;
+    width: 100%;
+    background: #FFF;
+    border: 1.5px solid #FFE3C0;
+    border-radius: 14px;
+    padding: 9px 12px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
     cursor: pointer;
-    z-index: 10;
-    transition: transform 0.2s;
-    outline: none;
+    gap: 2px;
+    box-shadow: 0 3px 10px rgba(255, 183, 3, 0.1);
+    transition: all 0.2s ease;
 }
 
-.hotspot-green-forgive {
-    top: 45%;
+.gratitude-card-item:hover, .gratitude-card-item:active {
+    border-color: var(--primary-pink);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 107, 139, 0.18);
 }
 
-.hotspot-pink-always {
-    top: 53.6%;
+.gratitude-icon {
+    font-size: 1.15rem;
+    margin-bottom: 2px;
 }
 
-.art-hotspot-btn:active {
-    transform: scale(0.95);
+.gratitude-title {
+    font-size: clamp(0.82rem, 2.5vw, 0.92rem);
+    font-weight: 700;
+    color: var(--primary-deep);
 }
 
-.art-hotspot-btn .hotspot-pulse {
-    position: absolute;
-    inset: 0;
-    border-radius: 24px;
+.gratitude-desc {
+    font-size: clamp(0.72rem, 2.1vw, 0.8rem);
+    color: var(--text-muted);
+    line-height: 1.35;
+}
+
+/* ==========================================================================
+   CARD 5: INSTAGRAM UNBLOCK & EMOTIONAL RECONNECTION
+   ========================================================================== */
+.emotional-plea-text {
+    font-size: clamp(0.8rem, 2.4vw, 0.9rem);
+    line-height: 1.45;
+    color: var(--text-dark);
+    text-align: center;
+    max-width: 96%;
+}
+
+.instagram-unblock-section {
+    width: 100%;
+    background: linear-gradient(135deg, #FFF6F8 0%, #FFFDF8 100%);
+    border-radius: 18px;
+    padding: clamp(12px, 2vh, 16px) clamp(10px, 2.5vw, 14px);
     border: 2px solid transparent;
-    animation: pulseBorder 2s infinite ease-in-out;
-    pointer-events: none;
+    background-clip: padding-box;
+    box-shadow: 0 8px 24px rgba(225, 48, 108, 0.15);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin: 4px 0;
 }
 
-.hotspot-green-forgive .hotspot-pulse {
-    border-color: rgba(78, 186, 135, 0.7);
+.instagram-unblock-section::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 20px;
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    z-index: -1;
+    animation: instaGlow 3s infinite alternate;
 }
 
-.hotspot-pink-always .hotspot-pulse {
-    border-color: rgba(255, 112, 150, 0.7);
+@keyframes instaGlow {
+    0% { opacity: 0.65; }
+    100% { opacity: 1; filter: drop-shadow(0 0 8px rgba(225, 48, 108, 0.4)); }
 }
 
-@keyframes pulseBorder {
-    0%, 100% { opacity: 0.3; transform: scale(0.98); }
-    50% { opacity: 0.95; transform: scale(1.02); }
+.insta-header-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: #fff;
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: clamp(0.76rem, 2.3vw, 0.86rem);
+    font-weight: 700;
+    margin: 0 auto;
+    box-shadow: 0 3px 10px rgba(225, 48, 108, 0.28);
+}
+
+.insta-subtitle {
+    font-size: clamp(0.74rem, 2.2vw, 0.82rem);
+    color: var(--text-dark);
+    line-height: 1.35;
+    text-align: center;
+    font-weight: 500;
+}
+
+.insta-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.insta-account-card {
+    background: #FFF;
+    border-radius: 14px;
+    padding: 10px 12px;
+    border: 1px solid rgba(225, 48, 108, 0.25);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.insta-account-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(225, 48, 108, 0.18);
+}
+
+.insta-card-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+}
+
+.insta-avatar-ring {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    padding: 2.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.insta-avatar-ring span {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.insta-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.insta-username {
+    font-size: clamp(0.92rem, 2.8vw, 1.05rem);
+    font-weight: 700;
+    color: #D81E5B;
+    letter-spacing: 0.3px;
+}
+
+.insta-account-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.insta-card-actions {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+}
+
+.btn-insta-link {
+    flex: 2;
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 20px;
+    padding: 6px 12px;
+    font-size: clamp(0.74rem, 2.2vw, 0.82rem);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 8px rgba(220, 39, 67, 0.25);
+    transition: transform 0.15s;
+}
+
+.btn-insta-link:active {
+    transform: scale(0.96);
+}
+
+.btn-insta-copy {
+    flex: 1;
+    background: #FFF0F4;
+    border: 1px solid #FFB6C1;
+    color: var(--primary-deep);
+    border-radius: 20px;
+    padding: 6px 10px;
+    font-size: clamp(0.72rem, 2.1vw, 0.8rem);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+}
+
+.btn-insta-copy:active {
+    background: #FFE0E8;
+}
+
+.unlock-friendship-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.btn-unlock-friendship {
+    width: 100%;
+    background: linear-gradient(135deg, #FFE3EC 0%, #FFD1DF 100%);
+    border: 2px dashed #FF6B8B;
+    border-radius: 24px;
+    padding: 10px 14px;
+    font-size: clamp(0.82rem, 2.5vw, 0.94rem);
+    font-weight: 700;
+    color: var(--primary-deep);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(255, 107, 139, 0.15);
+    transition: all 0.2s;
+    animation: gentlePulse 2.5s infinite ease-in-out;
+}
+
+.btn-unlock-friendship.unlocked {
+    background: linear-gradient(135deg, #E6FBF0 0%, #CEF5DF 100%);
+    border: 2px solid #38B000;
+    color: #267900;
+    animation: none;
+}
+
+.btn-unlock-friendship:active {
+    transform: scale(0.97);
+}
+
+.unlocked-message {
+    background: #FFFDF8;
+    border: 1.5px solid #FFD166;
+    border-radius: 14px;
+    padding: 10px 12px;
+    font-size: clamp(0.76rem, 2.3vw, 0.86rem);
+    color: var(--text-dark);
+    line-height: 1.4;
+    text-align: center;
+    animation: floatUp 0.4s ease-out;
+}
+
+.unlocked-sparkles {
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 2px;
 }
 
 /* Card Bottom Action Buttons & Pills */
@@ -927,7 +1578,7 @@ body {
     flex-direction: column;
     align-items: center;
     background: #FFF;
-    padding: 8px 8px 12px;
+    padding: 16px 14px;
     border-radius: 20px;
     box-shadow: var(--shadow-card);
     border: 2px solid rgba(255, 255, 255, 0.95);
@@ -935,6 +1586,10 @@ body {
     transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease;
     flex-shrink: 0;
     scroll-snap-align: center;
+    width: clamp(230px, 62vw, 290px);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
 .panoramic-card-thumb:hover {
@@ -943,22 +1598,49 @@ body {
     border-color: var(--primary-pink);
 }
 
-.panoramic-card-thumb img {
-    height: clamp(380px, 58vh, 520px);
+.panoramic-thumb-panda {
+    height: clamp(100px, 16vh, 130px);
     width: auto;
-    border-radius: 14px;
-    display: block;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    object-fit: contain;
+    margin: 10px 0;
+    filter: drop-shadow(0 6px 14px rgba(255, 107, 139, 0.2));
+    animation: pandaBounce 3s infinite ease-in-out;
 }
 
 .panoramic-thumb-label {
-    margin-top: 8px;
-    font-size: clamp(0.74rem, 2vw, 0.84rem);
+    font-size: clamp(0.78rem, 2.2vw, 0.88rem);
     font-weight: 700;
     color: var(--primary-deep);
     display: flex;
     align-items: center;
     gap: 4px;
+    margin-bottom: 4px;
+}
+
+.panoramic-thumb-quote {
+    font-size: clamp(0.72rem, 2vw, 0.8rem);
+    line-height: 1.4;
+    color: var(--text-dark);
+    margin: 6px 0 10px;
+    background: rgba(255, 240, 244, 0.6);
+    padding: 8px 10px;
+    border-radius: 12px;
+    border-left: 2.5px solid var(--primary-pink);
+    text-align: left;
+    width: 100%;
+}
+
+.panoramic-thumb-pill {
+    background: linear-gradient(135deg, #FFE0E6 0%, #FFD1DD 100%);
+    color: var(--primary-deep);
+    border-radius: 16px;
+    padding: 4px 12px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
 }
 
 /* Mode toggling */

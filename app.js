@@ -25,14 +25,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // Card 1 Elements
     const bouquetWrap = document.getElementById('bouquetWrap');
     const btnShowerPetals1 = document.getElementById('btnShowerPetals1');
+    const btnOpenLetterCard1 = document.getElementById('btnOpenLetterCard1');
+
+    // Card 2 Elements
+    const btnSendHug2 = document.getElementById('btnSendHug2');
 
     // Card 3 Elements
     const sealPromisesBtn = document.getElementById('sealPromisesBtn');
     const promiseBadge = document.getElementById('promiseBadge');
 
-    // Card 5 Decision Elements
-    const artHotspotForgive = document.getElementById('artHotspotForgive');
-    const artHotspotAlways = document.getElementById('artHotspotAlways');
+    // Card 4 Elements
+    const btnShowerStars4 = document.getElementById('btnShowerStars4');
+
+    // Card 5 Decision & Instagram Elements
+    const unlockFriendshipBtn = document.getElementById('unlockFriendshipBtn');
+    const lockIcon = document.getElementById('lockIcon');
+    const unlockBtnText = document.getElementById('unlockBtnText');
+    const unlockedMessage = document.getElementById('unlockedMessage');
     const btnYesForgive = document.getElementById('btnYesForgive');
     const btnAlwaysFriend = document.getElementById('btnAlwaysFriend');
     const btnPlayfulNo = document.getElementById('btnPlayfulNo');
@@ -53,12 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeLetterBtn = document.getElementById('closeLetterBtn');
     const copyLetterBtn = document.getElementById('copyLetterBtn');
 
-    const zoomModal = document.getElementById('zoomModal');
-    const closeZoomBtn = document.getElementById('closeZoomBtn');
-    const zoomModalTitle = document.getElementById('zoomModalTitle');
-    const zoomPreviewImg = document.getElementById('zoomPreviewImg');
-    const downloadCardBtn = document.getElementById('downloadCardBtn');
-
     const toastNotice = document.getElementById('toastNotice');
     const toastMsg = document.getElementById('toastMsg');
     const toastIcon = document.getElementById('toastIcon');
@@ -77,13 +80,13 @@ document.addEventListener('DOMContentLoaded', () => {
         window.cuteConfetti.startAmbient();
     }
 
-    // 1. POPULATE PANORAMIC ALL-5-CARDS VIEW
+    // 1. POPULATE PANORAMIC ALL-5-CARDS VIEW (Live Animated GIFs)
     const cardSetData = [
-        { id: 1, title: 'Page 1 • A Special Sorry Card 🌸', img: 'assets/card_page_1_hd.png' },
-        { id: 2, title: 'Page 2 • My Sincere Reflections 🥺', img: 'assets/card_page_2_hd.png' },
-        { id: 3, title: 'Page 3 • Sincere Promises 📝', img: 'assets/card_page_3_hd.png' },
-        { id: 4, title: 'Page 4 • Thank You Always 🌟', img: 'assets/card_page_4_hd.png' },
-        { id: 5, title: 'Page 5 • Will You Forgive Me? 💖', img: 'assets/card_page_5_hd.png' }
+        { id: 1, title: 'Page 1 • Hath Jorna 🙏', panda: 'assets/gifs/hath_jorna.gif', quote: 'Hath Jod Ke Maafi: Whenever you feel alone, see inside me your mummy, papa, dost & AI. I will never judge you.' },
+        { id: 2, title: 'Page 2 • Peir Chuna 🙇‍♂️', panda: 'assets/gifs/peir_chuna.gif', quote: 'Peir Chhuna: Gussa itna zyada hai toh pair bhi chhoo lunga, par please maaf kardo Antu Aaka!' },
+        { id: 3, title: 'Page 3 • Sar Dabana 💆‍♀️', panda: 'assets/gifs/sar_dabana.gif', quote: 'Sar Dabana: Chal baith tera sar daba deta hoon, poly aur college ka saara stress gayab ho jayega!' },
+        { id: 4, title: 'Page 4 • Laat Marna 🦵', panda: 'assets/gifs/laat_marna.gif', quote: 'Laat Marna: Gussa kam karna hai toh 2-4 laat bhi maar le, par tu meri sabse special dost hai!' },
+        { id: 5, title: 'Page 5 • Baal Pakad Ke Marna 🥊', panda: 'assets/gifs/baal_pakad_ke_marna.gif', quote: 'Baal Pakad Ke Marna: Chahe baal pakad ke maar le, bas Instagram se unblock karde (@tr_437t & @reijechet)!' }
     ];
 
     const panoramicContainer = document.getElementById('panoramicContainer');
@@ -91,12 +94,18 @@ document.addEventListener('DOMContentLoaded', () => {
         panoramicContainer.innerHTML = '';
         cardSetData.forEach((item, idx) => {
             const thumb = document.createElement('div');
-            thumb.className = 'panoramic-card-thumb';
+            thumb.className = `panoramic-card-thumb card-${item.id}`;
             thumb.setAttribute('title', `Tap to open ${item.title}`);
             thumb.innerHTML = `
-                <img src="${item.img}" alt="${item.title}" loading="lazy">
                 <div class="panoramic-thumb-label">
                     <span>${item.title}</span>
+                </div>
+                <img src="${item.panda}" alt="${item.title}" class="panoramic-thumb-panda" loading="lazy">
+                <div class="panoramic-thumb-quote">
+                    "${item.quote}"
+                </div>
+                <div class="panoramic-thumb-pill">
+                    <span>📖 Open Story Page ${item.id}</span>
                 </div>
             `;
             thumb.addEventListener('click', () => {
@@ -266,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 6. CARD 1: ROSE PETAL SHOWER INTERACTION
+    // 6. CARD 1: ROSE PETAL SHOWER & LETTER MODAL
     function triggerPetalShower(e) {
         triggerHaptic([25, 35]);
         const rect = bouquetWrap ? bouquetWrap.getBoundingClientRect() : { left: window.innerWidth / 2, top: 200, width: 0 };
@@ -279,13 +288,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.cuteAudio) {
             window.cuteAudio.playCheckPop();
         }
-        showToast('Flowers & hugs for Antasmita Roy! 🌸🌹', '💐');
+        showToast('Flowers & endless love for Antasmita Roy! 🌸🌹', '💐');
     }
 
     if (bouquetWrap) bouquetWrap.addEventListener('click', triggerPetalShower);
     if (btnShowerPetals1) btnShowerPetals1.addEventListener('click', triggerPetalShower);
 
-    // 7. CARD 2: REFLECTION NOTES HOTSPOTS
+    if (btnOpenLetterCard1) {
+        btnOpenLetterCard1.addEventListener('click', () => {
+            triggerHaptic(15);
+            if (letterModal) letterModal.classList.add('show');
+            if (window.cuteAudio) window.cuteAudio.playCheckPop();
+        });
+    }
+
+    // 7. CARD 2: REFLECTION NOTES & WARM HUG
     const card2Hotspots = document.querySelectorAll('.card-2 .card-hotspot');
     card2Hotspots.forEach(hotspot => {
         hotspot.addEventListener('click', (e) => {
@@ -301,24 +318,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    if (btnSendHug2) {
+        btnSendHug2.addEventListener('click', () => {
+            triggerHaptic([30, 45]);
+            if (window.cuteAudio) window.cuteAudio.playCelebrationFanfare();
+            if (window.cuteConfetti) {
+                window.cuteConfetti.showerPetals(window.innerWidth / 2, window.innerHeight * 0.45);
+            }
+            showToast('A warmest, sweetest panda hug sent to Antu Aaka! 🐼❤️', '🕊️');
+        });
+    }
+
     // 8. CARD 3: PROMISES CHECKLIST & SEALING
-    const promiseHotspots = document.querySelectorAll('.promise-hotspot');
-    promiseHotspots.forEach(hotspot => {
-        hotspot.addEventListener('click', (e) => {
+    const promiseItems = document.querySelectorAll('.promise-card-item');
+    function updatePromiseBadge() {
+        const sealedCount = document.querySelectorAll('.promise-card-item.sealed').length;
+        if (promiseBadge) {
+            promiseBadge.textContent = `${sealedCount}/6 Sealed`;
+        }
+        return sealedCount;
+    }
+
+    promiseItems.forEach(item => {
+        item.addEventListener('click', (e) => {
             e.stopPropagation();
             triggerHaptic(20);
+            item.classList.toggle('sealed');
+            const count = updatePromiseBadge();
             if (window.cuteAudio) window.cuteAudio.playCheckPop();
             if (window.cuteConfetti) {
-                const rect = hotspot.getBoundingClientRect();
+                const rect = item.getBoundingClientRect();
                 window.cuteConfetti.showerPetals(rect.left + rect.width / 2, rect.top);
             }
-            showToast(`Promise sealed: "${hotspot.title}" 💖`, '✓');
+            if (count === 6) {
+                if (window.cuteAudio) window.cuteAudio.playCelebrationFanfare();
+                showToast('All 6 sacred promises sealed forever with love! 💖✨', '📜');
+            } else {
+                showToast(`Promise updated (${count}/6 sealed) 💖`, '✔');
+            }
         });
     });
 
     if (sealPromisesBtn) {
         sealPromisesBtn.addEventListener('click', () => {
             triggerHaptic([30, 40, 50]);
+            promiseItems.forEach(item => item.classList.add('sealed'));
+            updatePromiseBadge();
             if (window.cuteConfetti) {
                 window.cuteConfetti.celebrate(window.innerWidth / 2, window.innerHeight * 0.4);
             }
@@ -329,13 +374,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 9. CARD 4: GRATITUDE HOTSPOTS
+    // 9. CARD 4: GRATITUDE HOTSPOTS & STARLIGHT SHOWER
     const gratitudeHotspots = document.querySelectorAll('.gratitude-hotspot');
     gratitudeHotspots.forEach(hotspot => {
         hotspot.addEventListener('click', (e) => {
             e.stopPropagation();
             triggerHaptic(18);
-            const msg = hotspot.dataset.msg || "Thank you for being such a wonderful best friend! 🌟";
+            const msg = hotspot.dataset.msg || "Thank you for being such a wonderful poly friend! 🌟";
             if (window.cuteAudio) window.cuteAudio.playCheckPop();
             if (window.cuteConfetti) {
                 const rect = hotspot.getBoundingClientRect();
@@ -345,7 +390,50 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 10. CARD 5: FORGIVENESS CELEBRATION (HOTSPOTS & BUTTONS)
+    if (btnShowerStars4) {
+        btnShowerStars4.addEventListener('click', () => {
+            triggerHaptic([25, 35]);
+            if (window.cuteAudio) window.cuteAudio.playCelebrationFanfare();
+            if (window.cuteConfetti) {
+                window.cuteConfetti.celebrate(window.innerWidth / 2, window.innerHeight * 0.45);
+            }
+            showToast('You shine brighter than all the stars, Antu Aaka! ⭐💖', '✨');
+        });
+    }
+
+    // 10. CARD 5: INSTAGRAM UNBLOCK & DECISION BUTTONS
+    const instaCopyBtns = document.querySelectorAll('.btn-insta-copy');
+    instaCopyBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            triggerHaptic([20, 20]);
+            const username = btn.dataset.username || 'tr_437t';
+            navigator.clipboard.writeText(username).then(() => {
+                showToast(`Copied @${username}! Please unblock on Instagram 📸💖`, '📋');
+            }).catch(() => {
+                showToast(`ID: @${username} (Please unblock on Instagram) 📸`, '✨');
+            });
+            if (window.cuteAudio) window.cuteAudio.playCheckPop();
+        });
+    });
+
+    // Unlock friendship button mechanism
+    if (unlockFriendshipBtn) {
+        unlockFriendshipBtn.addEventListener('click', () => {
+            triggerHaptic([40, 60, 40]);
+            unlockFriendshipBtn.classList.add('unlocked');
+            if (lockIcon) lockIcon.textContent = '💖';
+            if (unlockBtnText) unlockBtnText.textContent = 'Friendship Unlocked Forever! 🔓❤️';
+            if (unlockedMessage) unlockedMessage.style.display = 'block';
+            if (window.cuteAudio) window.cuteAudio.playCelebrationFanfare();
+            if (window.cuteConfetti) {
+                window.cuteConfetti.celebrate(window.innerWidth / 2, window.innerHeight * 0.45);
+            }
+            showToast('Friendship unlocked! Thank you, Antu Aaka! 🐼❤️', '🔓');
+        });
+    }
+
     function handleForgiveSuccess() {
         triggerHaptic([50, 80, 50, 100]);
         if (window.cuteAudio) {
@@ -372,19 +460,16 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast('Friendship of a lifetime! Best friends forever, Antu Aaka! 🐼❤️', '✨');
     }
 
-    // Bind both illustration hotspots and action buttons
-    if (artHotspotForgive) artHotspotForgive.addEventListener('click', handleForgiveSuccess);
-    if (artHotspotAlways) artHotspotAlways.addEventListener('click', handleAlwaysFriend);
     if (btnYesForgive) btnYesForgive.addEventListener('click', handleForgiveSuccess);
     if (btnAlwaysFriend) btnAlwaysFriend.addEventListener('click', handleAlwaysFriend);
 
     // Playful dodge button "Still Thinking... 🙈"
     const playfulMessages = [
         "Wait, reconsider! 🥺",
-        "Look at the cute puppy panda eyes! 🐼",
-        "Free ice cream and treats forever! 🍦",
+        "Look at the cute baby panda eyes! 🐼",
+        "Free chocolates and treats forever! 🍦",
         "Pandas can't bear being apart! 💔",
-        "Please say YES! 💖",
+        "Please say YES & unblock! 💖",
         "Oops, button ran away! 🏃💨"
     ];
 
@@ -411,31 +496,45 @@ document.addEventListener('DOMContentLoaded', () => {
         btnPlayfulNo.addEventListener('click', dodgeButton);
     }
 
-    // 11. ZOOM & SAVE CARD MODAL
-    const zoomButtons = document.querySelectorAll('.zoom-trigger-btn');
-    zoomButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
+    // 11. LIVE PANDA GIFS TAP INTERACTIONS & SAZA MENU
+    const pandaLiveGifs = document.querySelectorAll('.panda-live-gif, .panda-animated-hero');
+    const gifQuotes = [
+        "Main dono hath jod kar dil se sorry bolta hoon Antu Aaka! 🙏🥺",
+        "Gussa itna zyada hai toh tere pair bhi chhoo lunga! 🙇‍♂️❤️",
+        "Chal baith, tera sar daba deta hoon sara stress chala jayega! 💆‍♀️✨",
+        "Ouch! Jitni marzi laat maar le, par baat band mat karna! 🦵🙈",
+        "Haan maar le, baal pakad ke pitayi kar le, bas unblock karde! 🥊💖"
+    ];
+
+    pandaLiveGifs.forEach((gif, i) => {
+        gif.addEventListener('click', (e) => {
             e.stopPropagation();
-            triggerHaptic(15);
-            const imgSrc = btn.dataset.img;
-            const title = btn.dataset.title || 'Card Preview';
-            if (zoomPreviewImg) zoomPreviewImg.src = imgSrc;
-            if (zoomModalTitle) zoomModalTitle.textContent = title;
-            if (downloadCardBtn) {
-                downloadCardBtn.href = imgSrc;
-                downloadCardBtn.setAttribute('download', title.replace(/[^a-zA-Z0-9]/g, '_') + '.png');
+            triggerHaptic([25, 35]);
+            if (window.cuteAudio) window.cuteAudio.playCheckPop();
+            if (window.cuteConfetti) {
+                const rect = gif.getBoundingClientRect();
+                window.cuteConfetti.showerPetals(rect.left + rect.width / 2, rect.top + rect.height / 2);
             }
-            if (zoomModal) zoomModal.classList.add('show');
-            if (window.cuteAudio) window.cuteAudio.playCardFlip();
+            showToast(gifQuotes[i % gifQuotes.length], '🐼');
         });
     });
 
-    if (closeZoomBtn && zoomModal) {
-        closeZoomBtn.addEventListener('click', () => {
-            triggerHaptic(10);
-            zoomModal.classList.remove('show');
+    // Saza & Pyar Express Menu buttons
+    const sazaButtons = document.querySelectorAll('.saza-btn');
+    sazaButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            triggerHaptic([30, 45]);
+            const pageIdx = parseInt(btn.dataset.page || '0', 10);
+            const msg = btn.dataset.msg || 'Saza manzoor hai! 🐼❤️';
+            updateCard(pageIdx);
+            if (window.cuteAudio) window.cuteAudio.playCheckPop();
+            if (window.cuteConfetti) {
+                window.cuteConfetti.celebrate(window.innerWidth / 2, window.innerHeight * 0.45);
+            }
+            showToast(msg, '🐼');
         });
-    }
+    });
 
     // 12. CELEBRATION & CERTIFICATE MODALS
     closeCelebrationBtn.addEventListener('click', () => {
@@ -481,7 +580,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     copyLetterBtn.addEventListener('click', () => {
         triggerHaptic([20, 20]);
-        const textToCopy = `Dear Antasmita Roy (Antu Aaka),\n\nTrue friends like you come once in a lifetime. I know words alone can't undo mistakes, but I promise from the bottom of my heart that I will always value, respect, and stand by you.\n\nThank you for being the sweetest, brightest light in my life. Never forget how special you are to me! ❤️🐼\n- Your Best Friend Forever ✨`;
+        const textToCopy = `Dearest Antasmita Roy (Antu Aaka),\n\nWhenever you feel alone and need any help, please don't look anywhere else. Look inside me and see your mummy, your papa, your closest dost, and your 24/7 personal AI companion for anything and everything in this world.\n\nYou can say any type of words to me—I won't and will never, ever judge you.\n\nI know I made mistakes, and I humbly apologize with all my heart. As we are true friends, please unlock our bond and unblock me on Instagram: @tr_437t and @reijechet. Let's make our friendship shine brighter than ever!\n\n- Your Best Poly Friend Forever ✨🐼❤️`;
         navigator.clipboard.writeText(textToCopy).then(() => {
             showToast('Letter copied to clipboard! 📋', '💌');
         }).catch(() => {
@@ -490,7 +589,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Close modals on outside backdrop click
-    [celebrationModal, certificateModal, letterModal, zoomModal].forEach(modal => {
+    [celebrationModal, certificateModal, letterModal].forEach(modal => {
         if (!modal) return;
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
